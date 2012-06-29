@@ -36,7 +36,7 @@ Checkout the [demo](demo/pinchzoom.html "Pinchzoom demo").
 
 ## Swipe
 
-You can combine Pinchzoom with swipe.js, or other libraries: [demo](demo/swipe.html "Pinchzoom/Swipe.js demo")
+You can combine Pinchzoom with [Swipe.js](http://swipejs.com/), or other libraries: [demo](demo/swipe.html "Pinchzoom/Swipe.js demo")
 
 
 ## AMD
