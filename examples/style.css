@@ -1,0 +1,52 @@
+
+body,
+html{
+    text-align: center;
+    color: white;
+}
+
+body{
+    background-color: #333;
+    font-family: Georgia;
+}
+
+div.page{
+    margin: 50px auto 50px auto;
+    max-width: 500px;
+    position: relative;
+    text-align: left;
+}
+
+div.pinch-zoom {
+    position: relative;
+}
+div.pinch-zoom a{
+    color: white;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    text-decoration: none;
+    background: #333;
+    padding: 3px;
+    font-size: 11px;
+}
+
+div.pinch-zoom div.description {
+    position: absolute;
+    top: 60px;
+    left: 50px;
+}
+
+div.pinch-zoom div.description h1{
+    font-size: 40px;
+    margin: 0px;
+    margin-bottom: 10px;
+}
+div.pinch-zoom div.description p{
+    margin: 0px;
+}
+
+ul{
+    margin: 0;
+    padding: 0;
+}

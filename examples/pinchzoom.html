@@ -1,0 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Pinchzoom.js Demo</title>
+
+    <style type="text/css">
+        div.pinch-zoom,
+        div.pinch-zoom img{
+            width: 100%;
+            -webkit-user-drag: none;
+        }
+
+    </style>
+    <link rel="stylesheet" href="style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+
+    <!-- pinchzoom requires: jquery and underscore -->
+    <script type="text/javascript" src="../dependencies/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="../dependencies/underscore.js"></script>
+    <script type="text/javascript" src="../src/pinchzoom.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('div.pinch-zoom').each(function () {
+                new window.PinchZoom($(this), {});
+            });
+        })
+    </script>
+</head>
+<body>
+
+    <div class="page">
+        <div class="pinch-zoom">
+            <div class="description">
+                <h1>Pinchzoom.js</h1>
+                <p>
+                    Multi-touch zoom in Javascript
+                </p>
+            </div>
+            <img src="hand.jpg"/>
+            <a class="image" href="http://www.flickr.com/photos/tracemeek/5327224133/">Image: Hand X-Ray, Trace Meek</a>
+        </div>
+    </div>
+
+</body>
+</html>

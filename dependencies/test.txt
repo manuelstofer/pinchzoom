@@ -1,0 +1,16 @@
+rtpweb1 dom $ grep "version" */htdocs/typo3conf/ext/powermail/ext_emconf.php
+
+bmc-racing.com 1.5.3
+gesundheitsnetz2025.ch 1.5.3
+halter-unternehmungen.ch  1.5.3
+i-have-msf.ch 1.5.3
+museumslupe.ch 1.5.3
+netzwerk-cinema.ch 1.5.3
+obermeilen.ch 1.5.3
+psori.info 1.6.4-dev
+sekbuelach.ch 1.5.3
+sinalco.ch 1.5.3
+sonicemotion.com 1.5.3
+tamedia.ch 1.5.3
+werbeanstalt.ch 1.5.3
+zwk.ch 1.5.7
