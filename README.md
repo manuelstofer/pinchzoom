@@ -30,13 +30,13 @@ use2d:              Fallback to 2d transformations after interaction, which has 
 
 ## Examples
 
-Checkout the demo:
-[Demo](demo/pinchzoom.html "Pinchzoom demo")
+Checkout the [demo](demo/pinchzoom.html "Pinchzoom demo").
+
 
 
 ## Swipe
 
-You can combine Pinchzoom with swipe.js, or other libraries: [Demo](demo/swipe.html "Pinchzoom/Swipe.js demo")
+You can combine Pinchzoom with swipe.js, or other libraries: [demo](demo/swipe.html "Pinchzoom/Swipe.js demo")
 
 
 ## AMD
