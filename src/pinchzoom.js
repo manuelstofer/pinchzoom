@@ -674,10 +674,11 @@
     };
 
     if (typeof define !== 'undefined' && define.amd) {
-        define(['jquery', 'underscore', 'hammer'], function ($, _) {
+        define(['jquery', 'underscore'], function ($, _) {
             return definePinchZoom($, _);
         });
     } else {
-        window.PinchZoom = definePinchZoom(jQuery, _);
+        window.RTP = window.RTP || {};
+        window.RTP.PinchZoom = definePinchZoom(jQuery, _);
     }
 }).call(this);

@@ -24,7 +24,7 @@
     <script type="text/javascript">
         $(function () {
             $('div.pinch-zoom').each(function () {
-                new window.PinchZoom($(this), {});
+                new RTP.PinchZoom($(this), {});
             });
 
             window.mySwipe = new Swipe(document.getElementById('slider'), {
@@ -35,7 +35,6 @@
     </script>
 </head>
 <body>
-
     <div class="page">
         <div id='slider'>
             <ul>
