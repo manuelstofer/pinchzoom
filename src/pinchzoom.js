@@ -34,7 +34,7 @@
         PinchZoom.prototype = {
 
             defaults: {
-                tabZoomFactor: 2,
+                tapZoomFactor: 2,
                 zoomOutFactor: 1.3,
                 animationDuration: 300,
                 animationInterval: 5,
@@ -110,12 +110,12 @@
             },
 
             /**
-             * Event handler for 'doubletab'
+             * Event handler for 'doubletap'
              * @param event
              */
-            handleDoubleTab: function (event) {
+            handleDoubleTap: function (event) {
                 var center = this.getTouches(event)[0],
-                    zoomFactor = this.zoomFactor > 1 ? 1 : this.options.tabZoomFactor,
+                    zoomFactor = this.zoomFactor > 1 ? 1 : this.options.tapZoomFactor,
                     startZoomFactor = this.zoomFactor,
                     updateProgress = _.bind(function (progress) {
                         this.scaleTo(startZoomFactor + progress * (zoomFactor - startZoomFactor), center);
@@ -605,7 +605,7 @@
                     event.preventDefault();
                 },
 
-                detectDoubleTab = function (event) {
+                detectDoubleTap = function (event) {
                     var time = (new Date()).getTime();
 
                     if (fingers > 1) {
@@ -615,7 +615,7 @@
                     if (time - lastTouchStart < 300) {
                         cancelEvent(event);
 
-                        target.handleDoubleTab(event);
+                        target.handleDoubleTap(event);
                         switch (interaction) {
                             case "zoom":
                                 target.handleZoomEnd(event);
@@ -635,7 +635,7 @@
             el.addEventListener('touchstart', function (event) {
                 firstMove = true;
                 fingers = event.touches.length;
-                detectDoubleTab(event);
+                detectDoubleTap(event);
             });
 
             el.addEventListener('touchmove', function (event) {
