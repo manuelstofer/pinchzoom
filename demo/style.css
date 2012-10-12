@@ -33,8 +33,8 @@ div.pinch-zoom a{
 
 div.pinch-zoom div.description {
     position: absolute;
-    top: 60px;
-    left: 50px;
+    top: 500px;
+    left: 210px;
 }
 
 div.pinch-zoom div.description h1{
