@@ -1,3 +1,13 @@
+/*
+
+  Copyright (c) Manuel Stofer 2012 - rtp.ch - RTP.PinchZoom.js
+  This is free software; you can redistribute it and/or modify it under the terms
+  of the [GNU General Public License](http://www.gnu.org/licenses/gpl-3.0.txt),
+  either version 3 of the License, or (at your option) any later version.
+
+*/
+
+
 /*global jQuery, console, define, setTimeout, _, window*/
 (function () {
     'use strict';
