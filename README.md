@@ -27,13 +27,10 @@ minZoom:            The minimum zoom factor. (default 0.5)
 
 ```
 
-## Examples
+## Licence
 
-- Checkout the [demo](demo/pinchzoom.html "PinchZoom demo").
-- You can combine PinchZoom with [Swipe.js](http://swipejs.com/), or other libraries: [demo](demo/swipe.html "PinchZoom/Swipe.js demo")
+This is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License, either version 3 of the License, or (at your option) any later version.
 
+## Github Page with demo
 
-
-## AMD
-
-PinchZoom.js is ready to be loaded using an AMD module loader like [require.js](http://requirejs.org/ "require.js")
+http://rtp-ch.github.com/PinchZoom/
