@@ -33,4 +33,4 @@ This is free software; you can redistribute it and/or modify it under the terms 
 
 ## Github Page with demo
 
-http://rtp-ch.github.com/PinchZoom/
+http://rtp-ch.github.com/pinchzoom/
