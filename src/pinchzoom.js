@@ -1,6 +1,6 @@
 /*
 
-  Copyright (c) Manuel Stofer 2012 - rtp.ch - RTP.PinchZoom.js
+  Copyright (c) Manuel Stofer 2013 - rtp.ch - RTP.PinchZoom.js
   This is free software; you can redistribute it and/or modify it under the terms
   of the [GNU General Public License](http://www.gnu.org/licenses/gpl-3.0.txt),
   either version 3 of the License, or (at your option) any later version.
@@ -8,13 +8,14 @@
 */
 
 
-/*global jQuery, console, define, setTimeout, _, window*/
+/*global jQuery, console, define, setTimeout, window*/
 (function () {
     'use strict';
-    var definePinchZoom = function ($, _) {
+    var definePinchZoom = function ($) {
 
         /**
-         * Pinch zoom using jQuery and Underscore.js
+         * Pinch zoom using jQuery
+         * @version 0.0.2
          * @author Manuel Stofer <mst@rtp.ch>
          * @param el
          * @param options
@@ -28,7 +29,7 @@
                     x: 0,
                     y: 0
                 };
-                this.options = _.extend(this.defaults, options);
+                this.options = $.extend({}, this.defaults, options);
                 this.setupMarkup();
                 this.bindEvents();
                 this.update();
@@ -127,9 +128,9 @@
                 var center = this.getTouches(event)[0],
                     zoomFactor = this.zoomFactor > 1 ? 1 : this.options.tapZoomFactor,
                     startZoomFactor = this.zoomFactor,
-                    updateProgress = _.bind(function (progress) {
+                    updateProgress = (function (progress) {
                         this.scaleTo(startZoomFactor + progress * (zoomFactor - startZoomFactor), center);
-                    }, this);
+                    }).bind(this);
 
                 if (this.hasInteraction) {
                     return;
@@ -222,8 +223,8 @@
              */
             getVectorAvg: function (vectors) {
                 return {
-                    x: _.reduce(_.pluck(vectors, 'x'), sum) / vectors.length,
-                    y: _.reduce(_.pluck(vectors, 'y'), sum) / vectors.length
+                    x: vectors.map(function (v) { return v.x; }).reduce(sum) / vectors.length,
+                    y: vectors.map(function (v) { return v.y; }).reduce(sum) / vectors.length
                 };
             },
 
@@ -267,11 +268,11 @@
                         x: this.offset.x,
                         y: this.offset.y
                     },
-                    updateProgress = _.bind(function (progress) {
+                    updateProgress = (function (progress) {
                         this.offset.x = startOffset.x + progress * (targetOffset.x - startOffset.x);
                         this.offset.y = startOffset.y + progress * (targetOffset.y - startOffset.y);
                         this.update();
-                    }, this);
+                    }).bind(this);
 
                 this.animate(
                     this.options.animationDuration,
@@ -289,12 +290,9 @@
                 var startZoomFactor = this.zoomFactor,
                     zoomFactor = 1,
                     center = this.getCurrentZoomCenter(),
-                    updateProgress = _.bind(
-                        function (progress) {
-                            this.scaleTo(startZoomFactor + progress * (zoomFactor - startZoomFactor), center);
-                        },
-                        this
-                    );
+                    updateProgress = (function (progress) {
+                        this.scaleTo(startZoomFactor + progress * (zoomFactor - startZoomFactor), center);
+                    }).bind(this);
 
                 this.animate(
                     this.options.animationDuration,
@@ -370,7 +368,7 @@
              */
             getTouches: function (event) {
                 var position = this.container.offset();
-                return _.map(event.touches, function (touch) {
+                return Array.prototype.slice.call(event.touches).map(function (touch) {
                     return {
                         x: touch.pageX - position.left,
                         y: touch.pageY - position.top
@@ -389,7 +387,7 @@
              */
             animate: function (duration, interval, framefn, timefn, callback) {
                 var startTime = new Date().getTime(),
-                    renderFrame = _.bind(function () {
+                    renderFrame = (function () {
                         if (!this.inAnimation) { return; }
                         var frameTime = new Date().getTime() - startTime,
                             progress = frameTime / duration;
@@ -409,7 +407,7 @@
                             this.update();
                             setTimeout(renderFrame, interval);
                         }
-                    }, this);
+                    }).bind(this);
                 this.inAnimation = true;
                 renderFrame();
             },
@@ -476,8 +474,8 @@
              */
             bindEvents: function () {
                 detectGestures(this.container.get(0), this);
-                $(window).bind('resize', _.bind(this.update, this));
-                $(this.el).find('img').bind('load', _.bind(this.update, this));
+                $(window).bind('resize', this.update.bind(this));
+                $(this.el).find('img').bind('load', this.update.bind(this));
             },
 
             /**
@@ -490,7 +488,7 @@
                 }
                 this.updatePlaned = true;
 
-                setTimeout(_.bind(function () {
+                setTimeout((function () {
                     this.updatePlaned = false;
                     this.updateAspectRatio();
 
@@ -501,12 +499,12 @@
                             'translate3d(' + offsetX    + 'px,' + offsetY    + 'px,0px)',
                         transform2d =   'scale('       + zoomFactor + ', '  + zoomFactor + ') ' +
                             'translate('   + offsetX    + 'px,' + offsetY    + 'px)',
-                        removeClone = _.bind(function () {
+                        removeClone = (function () {
                             if (this.clone) {
                                 this.clone.remove();
                                 delete this.clone;
                             }
-                        }, this);
+                        }).bind(this);
 
                     // Scale 3d and translate3d are faster (at least on ios)
                     // but they also reduce the quality.
@@ -542,7 +540,7 @@
                         });
                         this.is3d = false;
                     }
-                }, this), 0);
+                }).bind(this), 0);
             }
         };
 
@@ -589,7 +587,7 @@
                 },
 
                 targetTouches = function (touches) {
-                    return _.map(touches, function (touch) {
+                    return Array.prototype.slice.call(touches).map(function (touch) {
                         return {
                             x: touch.pageX,
                             y: touch.pageY
@@ -684,11 +682,11 @@
     };
 
     if (typeof define !== 'undefined' && define.amd) {
-        define(['jquery', 'underscore'], function ($, _) {
-            return definePinchZoom($, _);
+        define(['jquery'], function ($) {
+            return definePinchZoom($);
         });
     } else {
         window.RTP = window.RTP || {};
-        window.RTP.PinchZoom = definePinchZoom(jQuery, _);
+        window.RTP.PinchZoom = definePinchZoom(jQuery);
     }
 }).call(this);
