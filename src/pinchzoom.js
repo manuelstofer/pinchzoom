@@ -541,6 +541,20 @@
                         this.is3d = false;
                     }
                 }).bind(this), 0);
+            },
+
+            /**
+             * Enables event handling for gestures
+             */
+            enable: function() {
+              this.enabled = true;
+            },
+
+            /**
+             * Disables event handling for gestures
+             */
+            disable: function() {
+              this.enabled = false;
             }
         };
 
@@ -641,40 +655,45 @@
                 firstMove = true;
 
             el.addEventListener('touchstart', function (event) {
-                firstMove = true;
-                fingers = event.touches.length;
-                detectDoubleTap(event);
+                if(target.enabled) {
+                    firstMove = true;
+                    fingers = event.touches.length;
+                    detectDoubleTap(event);
+                }
             });
 
             el.addEventListener('touchmove', function (event) {
+                if(target.enabled) {
+                    if (firstMove) {
+                        updateInteraction(event);
+                        if (interaction) {
+                            cancelEvent(event);
+                        }
+                        startTouches = targetTouches(event.touches);
+                    } else {
+                        switch (interaction) {
+                            case 'zoom':
+                                target.handleZoom(event, calculateScale(startTouches, targetTouches(event.touches)));
+                                break;
+                            case 'drag':
+                                target.handleDrag(event);
+                                break;
+                        }
+                        if (interaction) {
+                            cancelEvent(event);
+                            target.update();
+                        }
+                    }
 
-                if (firstMove) {
-                    updateInteraction(event);
-                    if (interaction) {
-                        cancelEvent(event);
-                    }
-                    startTouches = targetTouches(event.touches);
-                } else {
-                    switch (interaction) {
-                        case 'zoom':
-                            target.handleZoom(event, calculateScale(startTouches, targetTouches(event.touches)));
-                            break;
-                        case 'drag':
-                            target.handleDrag(event);
-                            break;
-                    }
-                    if (interaction) {
-                        cancelEvent(event);
-                        target.update();
-                    }
+                    firstMove = false;
                 }
-
-                firstMove = false;
             });
 
             el.addEventListener('touchend', function (event) {
-                fingers = event.touches.length;
-                updateInteraction(event);
+                if(target.enabled) {
+                    fingers = event.touches.length;
+                    updateInteraction(event);
+                }
             });
         };
 

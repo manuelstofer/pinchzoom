@@ -29,6 +29,15 @@ minZoom:            The minimum zoom factor. (default 0.5)
 
 ```
 
+### Methods
+
+```Text
+
+enable:             Enables all gesture capturing
+disable:            Disables all gesture capturing
+
+```
+
 ## Licence
 
 This is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License, either version 3 of the License, or (at your option) any later version.
