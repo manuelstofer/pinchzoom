@@ -26,6 +26,7 @@ zoomOutFactor:      Resizes to original size when zoom factor is below the confi
 animationDuration:  The animation duration in milliseconds. (default 300)
 maxZoom:            The maximum zoom factor. (default 4)
 minZoom:            The minimum zoom factor. (default 0.5)
+lockDragAxis        Locks panning of the element to a single axis. (default false)
 
 ```
 

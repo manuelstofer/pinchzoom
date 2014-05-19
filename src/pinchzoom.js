@@ -51,6 +51,7 @@
                 animationInterval: 5,
                 maxZoom: 4,
                 minZoom: 0.5,
+                lockDragAxis: false,
                 use2d: true
             },
 
@@ -202,10 +203,27 @@
              */
             drag: function (center, lastCenter) {
                 if (lastCenter) {
-                    this.addOffset({
+                  if(this.options.lockDragAxis) {
+                    // lock scroll to position that was changed the most
+                    if(Math.abs(center.x - lastCenter.x) > Math.abs(center.y - lastCenter.y)) {
+                      this.addOffset({
                         x: -(center.x - lastCenter.x),
-                        y: -(center.y - lastCenter.y)
+                        y: 0
+                      });
+                    }
+                    else {
+                      this.addOffset({
+                        y: -(center.y - lastCenter.y),
+                        x: 0
+                      });
+                    }
+                  }
+                  else {
+                    this.addOffset({
+                      y: -(center.y - lastCenter.y),
+                      x: -(center.x - lastCenter.x)
                     });
+                  }
                 }
             },
 
