@@ -54,7 +54,12 @@
                 maxZoom: 4,
                 minZoom: 0.5,
                 lockDragAxis: false,
-                use2d: true
+                use2d: true,
+                zoomStartEventName: 'pz_zoomstart',
+                zoomEndEventName: 'pz_zoomend',
+                dragStartEventName: 'pz_dragstart',
+                dragEndEventName: 'pz_dragend',
+                doubleTapEventName: 'pz_doubletap'
             },
 
             /**
@@ -62,6 +67,7 @@
              * @param event
              */
             handleDragStart: function (event) {
+                this.el.trigger(this.options.dragStartEventName);
                 this.stopAnimation();
                 this.lastDragPosition = false;
                 this.hasInteraction = true;
@@ -83,6 +89,7 @@
             },
 
             handleDragEnd: function () {
+                this.el.trigger(this.options.dragEndEventName);
                 this.end();
             },
 
@@ -91,6 +98,7 @@
              * @param event
              */
             handleZoomStart: function (event) {
+                this.el.trigger(this.options.zoomStartEventName);
                 this.stopAnimation();
                 this.lastScale = 1;
                 this.nthZoom = 0;
@@ -120,6 +128,7 @@
             },
 
             handleZoomEnd: function () {
+                this.el.trigger(this.options.zoomEndEventName);
                 this.end();
             },
 
@@ -143,6 +152,7 @@
                 }
 
                 this.animate(this.options.animationDuration, this.options.animationInterval, updateProgress, this.swing);
+                this.el.trigger(this.options.doubleTapEventName);
             },
 
             /**
