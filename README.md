@@ -27,6 +27,11 @@ animationDuration:  The animation duration in milliseconds. (default 300)
 maxZoom:            The maximum zoom factor. (default 4)
 minZoom:            The minimum zoom factor. (default 0.5)
 lockDragAxis        Locks panning of the element to a single axis. (default false)
+zoomStartEventName  Registers a custom handler to be triggered by the ZoomStart event (default pz_zoomstart)
+zoomEndEventName    Registers a custom handler to be triggered by the ZoomEnd event (default pz_zoomend)
+dragStartEventName  Registers a custom handler to be triggered by the DragStart event (default pz_dragstart)
+dragEndEventName    Registers a custom handler to be triggered by the DragEnd event (default pz_dragend)
+doubleTapEventName  Registers a custom handler to be triggered by the DoubleTap event (default pz_doubletap)
 
 ```
 
@@ -34,7 +39,7 @@ lockDragAxis        Locks panning of the element to a single axis. (default fals
 
 ```Text
 
-enable:             Enables all gesture capturing
+enable:             Enables all gesture capturing (default)
 disable:            Disables all gesture capturing
 
 ```
