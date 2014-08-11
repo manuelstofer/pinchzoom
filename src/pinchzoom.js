@@ -33,6 +33,8 @@
                 this.setupMarkup();
                 this.bindEvents();
                 this.update();
+                // default enable.
+                this.enable();
 
             },
             sum = function (a, b) {
@@ -332,7 +334,10 @@
              * @return the initial zoom factor
              */
             getInitialZoomFactor: function () {
-                return this.container.width() / this.el.width();
+                // use .offsetWidth instead of width()
+                // because jQuery-width() return the original width but Zepto-width() will calculate width with transform.
+                // the same as .height()
+                return this.container[0].offsetWidth / this.el[0].offsetWidth;
             },
 
             /**
@@ -340,7 +345,7 @@
              * @return the aspect ratio
              */
             getAspectRatio: function () {
-                return this.el.width() / this.el.height();
+                return this.el[0].offsetWidth / this.el[0].offsetHeight;
             },
 
             /**
@@ -352,22 +357,22 @@
 
                 // uses following formula to calculate the zoom center x value
                 // offset_left / offset_right = zoomcenter_x / (container_x - zoomcenter_x)
-                var length = this.container.width() * this.zoomFactor,
+                var length = this.container[0].offsetWidth * this.zoomFactor,
                     offsetLeft  = this.offset.x,
-                    offsetRight = length - offsetLeft - this.container.width(),
+                    offsetRight = length - offsetLeft -this.container[0].offsetWidth,
                     widthOffsetRatio = offsetLeft / offsetRight,
-                    centerX = widthOffsetRatio * this.container.width() / (widthOffsetRatio + 1),
+                    centerX = widthOffsetRatio * this.container[0].offsetWidth / (widthOffsetRatio + 1),
 
                 // the same for the zoomcenter y
-                    height = this.container.height() * this.zoomFactor,
+                    height = this.container[0].offsetHeight * this.zoomFactor,
                     offsetTop  = this.offset.y,
-                    offsetBottom = height - offsetTop - this.container.height(),
+                    offsetBottom = height - offsetTop - this.container[0].offsetHeight,
                     heightOffsetRatio = offsetTop / offsetBottom,
-                    centerY = heightOffsetRatio * this.container.height() / (heightOffsetRatio + 1);
+                    centerY = heightOffsetRatio * this.container[0].offsetHeight / (heightOffsetRatio + 1);
 
                 // prevents division by zero
-                if (offsetRight === 0) { centerX = this.container.width(); }
-                if (offsetBottom === 0) { centerY = this.container.height(); }
+                if (offsetRight === 0) { centerX = this.container[0].offsetWidth; }
+                if (offsetBottom === 0) { centerY = this.container[0].offsetHeight; }
 
                 return {
                     x: centerX,
@@ -447,11 +452,11 @@
             },
 
             getContainerX: function () {
-                return this.container.width();
+                return this.container[0].offsetWidth;
             },
 
             getContainerY: function () {
-                return this.container.height();
+                return this.container[0].offsetHeight;
             },
 
             setContainerY: function (y) {
@@ -471,12 +476,13 @@
                     'position': 'relative'
                 });
 
+                // Zepto doesn't recognize `webkitTransform..` style
                 this.el.css({
-                    'webkitTransformOrigin': '0% 0%',
-                    'mozTransformOrigin': '0% 0%',
-                    'msTransformOrigin': '0% 0%',
-                    'oTransformOrigin': '0% 0%',
-                    'transformOrigin': '0% 0%',
+                    '-webkit-transform-origin': '0% 0%',
+                    '-moz-transform-origin': '0% 0%',
+                    '-ms-transform-origin': '0% 0%',
+                    '-o-transform-origin': '0% 0%',
+                    'transform-origin': '0% 0%',
                     'position': 'absolute'
                 });
             },
@@ -492,8 +498,9 @@
              */
             bindEvents: function () {
                 detectGestures(this.container.get(0), this);
-                $(window).bind('resize', this.update.bind(this));
-                $(this.el).find('img').bind('load', this.update.bind(this));
+                // Zepto and jQuery both know about `on`
+                $(window).on('resize', this.update.bind(this));
+                $(this.el).find('img').on('load', this.update.bind(this));
             },
 
             /**
@@ -532,10 +539,10 @@
                         this.is3d = true;
                         removeClone();
                         this.el.css({
-                            'webkitTransform':  transform3d,
-                            'oTransform':       transform2d,
-                            'msTransform':      transform2d,
-                            'mozTransform':     transform2d,
+                            '-webkit-transform':  transform3d,
+                            '-o-transform':       transform2d,
+                            '-ms-transform':      transform2d,
+                            '-moz-transform':     transform2d,
                             'transform':        transform3d
                         });
                     } else {
@@ -550,10 +557,10 @@
                             setTimeout(removeClone, 200);
                         }
                         this.el.css({
-                            'webkitTransform':  transform2d,
-                            'oTransform':       transform2d,
-                            'msTransform':      transform2d,
-                            'mozTransform':     transform2d,
+                            '-webkit-transform':  transform2d,
+                            '-o-transform':       transform2d,
+                            '-ms-transform':      transform2d,
+                            '-moz-transform':     transform2d,
                             'transform':        transform2d
                         });
                         this.is3d = false;
@@ -724,6 +731,6 @@
         });
     } else {
         window.RTP = window.RTP || {};
-        window.RTP.PinchZoom = definePinchZoom(jQuery);
+        window.RTP.PinchZoom = definePinchZoom(window.$);
     }
 }).call(this);
