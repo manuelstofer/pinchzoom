@@ -5,9 +5,8 @@ PinchZoom.js is a Javascript library providing multi touch gestures for zooming 
 ## Usage
 
 ### Requirements
-Its built using jQuery. Requires modern js (ECMA Script 5).
-
-For a good proxy of ECMA 5 support, look at http://caniuse.com/use-strict.
+* jQuery or Zepto.
+* ECMA 5 support (http://caniuse.com/use-strict).
 
 ### Initialisation
 
