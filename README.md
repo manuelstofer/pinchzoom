@@ -45,7 +45,7 @@ disable:            Disables all gesture capturing
 
 ## Licence
 
-This is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License, either version 3 of the License, or (at your option) any later version.
+PinchZoom is licensed under the [MIT License](http://opensource.org/licenses/MIT).
 
 ## Github Page with demo
 
