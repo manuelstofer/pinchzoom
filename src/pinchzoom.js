@@ -333,13 +333,6 @@
             },
 
             /**
-             * Updates the aspect ratio
-             */
-            updateAspectRatio: function () {
-                this.setContainerY(this.getContainerX() / this.getAspectRatio());
-            },
-
-            /**
              * Calculates the initial zoom factor (for the element to fit into the container)
              * @return the initial zoom factor
              */
@@ -350,13 +343,6 @@
                 return this.container[0].offsetWidth / this.el[0].offsetWidth;
             },
 
-            /**
-             * Calculates the aspect ratio of the element
-             * @return the aspect ratio
-             */
-            getAspectRatio: function () {
-                return this.el[0].offsetWidth / this.el[0].offsetHeight;
-            },
 
             /**
              * Calculates the virtual zoom center for the current offset and zoom factor
@@ -469,10 +455,6 @@
                 return this.container[0].offsetHeight;
             },
 
-            setContainerY: function (y) {
-                return this.container.height(y);
-            },
-
             /**
              * Creates the expected html structure
              */
@@ -483,7 +465,9 @@
 
                 this.container.css({
                     'overflow': 'hidden',
-                    'position': 'relative'
+                    'position': 'relative',
+                    // Set height once here instead of doing this on every update(), this removes jank and also resolves issue with Android 2.x (height doesn't get set so image is hidden). Down side of this is we need height on instantiate, will need to wait for image load if height isn't explicit.
+                    'height': $(this.el).height() + 'px'
                 });
 
                 // Zepto doesn't recognize `webkitTransform..` style
@@ -525,7 +509,6 @@
 
                 setTimeout((function () {
                     this.updatePlaned = false;
-                    this.updateAspectRatio();
 
                     var zoomFactor = this.getInitialZoomFactor() * this.zoomFactor,
                         offsetX = -this.offset.x / zoomFactor,
@@ -626,6 +609,9 @@
                 },
 
                 updateInteraction = function (event) {
+                    // Fix for Android Browser
+                    fingers = event.touches.length;
+
                     if (fingers === 2) {
                         setInteraction('zoom');
                     } else if (fingers === 1 && target.canDrag()) {
