@@ -36,7 +36,7 @@ Pinchzoom emits some custom events you can listen to
 ```Text
 
 pz_zoomstart  Started to zoom
-pz_zoomend    Ended stopped zooming
+pz_zoomend    Stopped zooming
 pz_dragstart  Started to drag the element
 pz_dragend    Stopped to drag the element
 pz_doubletap  Resetting the zoom with doubletab
