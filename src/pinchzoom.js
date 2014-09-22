@@ -750,7 +750,7 @@
         return PinchZoom;
     };
 
-    if (typeof define !== 'undefined' && define.amd) {
+    if (typeof define !== 'undefined' && define.amd && define.jquery) {
         define(['jquery'], function ($) {
             return definePinchZoom($);
         });
