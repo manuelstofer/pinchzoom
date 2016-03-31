@@ -65,7 +65,6 @@
                 tapZoomFactor: 2,
                 zoomOutFactor: 1.3,
                 animationDuration: 300,
-                animationInterval: 5,
                 maxZoom: 4,
                 minZoom: 0.5,
                 lockDragAxis: false,
@@ -166,7 +165,7 @@
                     center = this.getCurrentZoomCenter();
                 }
 
-                this.animate(this.options.animationDuration, this.options.animationInterval, updateProgress, this.swing);
+                this.animate(this.options.animationDuration, updateProgress, this.swing);
                 this.el.trigger(this.options.doubleTapEventName);
             },
 
@@ -321,7 +320,6 @@
 
                 this.animate(
                     this.options.animationDuration,
-                    this.options.animationInterval,
                     updateProgress,
                     this.swing
                 );
@@ -341,7 +339,6 @@
 
                 this.animate(
                     this.options.animationDuration,
-                    this.options.animationInterval,
                     updateProgress,
                     this.swing
                 );
@@ -428,12 +425,11 @@
              * Animation loop
              * does not support simultaneous animations
              * @param duration
-             * @param interval
              * @param framefn
              * @param timefn
              * @param callback
              */
-            animate: function (duration, interval, framefn, timefn, callback) {
+            animate: function (duration, framefn, timefn, callback) {
                 var startTime = new Date().getTime(),
                     renderFrame = (function () {
                         if (!this.inAnimation) { return; }
@@ -453,11 +449,11 @@
                             }
                             framefn(progress);
                             this.update();
-                            setTimeout(renderFrame, interval);
+                            requestAnimationFrame(renderFrame);
                         }
                     }).bind(this);
                 this.inAnimation = true;
-                renderFrame();
+                requestAnimationFrame(renderFrame);
             },
 
             /**
