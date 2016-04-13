@@ -20,7 +20,7 @@
     <script type="text/javascript" src="../dependencies/jquery-1.7.2.min.js"></script>
     <script type="text/javascript" src="../src/pinchzoom.js"></script>
     <script type="text/javascript">
-        $(function () {
+        $(window).load(function () {
             $('div.pinch-zoom').each(function () {
                 new RTP.PinchZoom($(this), {});
             });
