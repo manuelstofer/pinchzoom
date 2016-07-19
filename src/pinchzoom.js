@@ -69,6 +69,7 @@
                 minZoom: 0.5,
                 lockDragAxis: false,
                 use2d: true,
+                containerHeight: false,
                 zoomStartEventName: 'pz_zoomstart',
                 zoomEndEventName: 'pz_zoomend',
                 dragStartEventName: 'pz_dragstart',
@@ -536,7 +537,11 @@
 
                 setTimeout((function () {
                     this.updatePlaned = false;
-                    this.updateAspectRatio();
+                    if(this.options.containerHeight){
+                      this.setContainerY(this.options.containerHeight)
+                    }else {
+                      this.updateAspectRatio();
+                    }
 
                     var zoomFactor = this.getInitialZoomFactor() * this.zoomFactor,
                         offsetX = -this.offset.x / zoomFactor,
