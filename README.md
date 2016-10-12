@@ -12,7 +12,11 @@ PinchZoom.js is a Javascript library providing multi touch gestures for zooming 
 
 ```Javascript
 
-new PinchZoom($('#your-element'), options);
+$('#your-element').pinchzoom(options);
+
+// OR
+
+new RTP.PinchZoom($('#your-element'), options);
 
 ```
 

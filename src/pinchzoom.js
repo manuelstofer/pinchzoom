@@ -754,4 +754,20 @@
         window.RTP = window.RTP || {};
         window.RTP.PinchZoom = definePinchZoom(window.$);
     }
+
+	// provide a standard jQuery hook point
+	(function($)
+	{
+		$.fn.pinchzoom = function(options)
+		{
+			options = options || {};
+
+			// so we can be chained
+			//@see http://docs.jquery.com/Plugins/Authoring
+			return this.each(function()
+			{
+				new RTP.PinchZoom(this, options);	
+			});
+		};
+	})(jQuery);
 }).call(this);
