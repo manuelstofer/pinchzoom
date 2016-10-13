@@ -73,7 +73,8 @@
                 zoomEndEventName: 'pz_zoomend',
                 dragStartEventName: 'pz_dragstart',
                 dragEndEventName: 'pz_dragend',
-                doubleTapEventName: 'pz_doubletap'
+                doubleTapEventName: 'pz_doubletap',
+                cancelNonInteractionEvents: false
             },
 
             /**
@@ -712,7 +713,8 @@
                 if(target.enabled) {
                     if (firstMove) {
                         updateInteraction(event);
-                        if (interaction) {
+                        if (interaction
+                            || target.options.cancelNonInteractionEvents) {
                             cancelEvent(event);
                         }
                         startTouches = targetTouches(event.touches);
@@ -725,8 +727,14 @@
                                 target.handleDrag(event);
                                 break;
                         }
-                        if (interaction) {
-                            cancelEvent(event);
+
+                        if (interaction
+                             || target.options.cancelNonInteractionEvents) {
+	                            cancelEvent(event);
+                        }
+
+                        if(interaction)
+                        {
                             target.update();
                         }
                     }
