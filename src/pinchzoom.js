@@ -780,6 +780,9 @@
 				if(!target.enabled)
 					return;
 
+				if(!target.canDrag())
+					return;
+
 				mousePos.x = event.pageX;
 				mousePos.y = event.pageY;
 
