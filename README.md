@@ -12,7 +12,11 @@ PinchZoom.js is a Javascript library providing multi touch gestures for zooming 
 
 ```Javascript
 
-new PinchZoom($('#your-element'), options);
+$('#your-element').pinchzoom(options);
+
+// OR
+
+new RTP.PinchZoom($('#your-element'), options);
 
 ```
 
@@ -26,6 +30,7 @@ animationDuration:  The animation duration in milliseconds. (default 300)
 maxZoom:            The maximum zoom factor. (default 4)
 minZoom:            The minimum zoom factor. (default 0.5)
 lockDragAxis        Locks panning of the element to a single axis. (default false)
+cancelNonInteractionEvents:	Kills touchmove event propagation when zoomed out. (default false)
 
 ```
 

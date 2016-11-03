@@ -73,7 +73,8 @@
                 zoomEndEventName: 'pz_zoomend',
                 dragStartEventName: 'pz_dragstart',
                 dragEndEventName: 'pz_dragend',
-                doubleTapEventName: 'pz_doubletap'
+                doubleTapEventName: 'pz_doubletap',
+                cancelNonInteractionEvents: false
             },
 
             /**
@@ -712,7 +713,8 @@
                 if(target.enabled) {
                     if (firstMove) {
                         updateInteraction(event);
-                        if (interaction) {
+                        if (interaction
+                            || target.options.cancelNonInteractionEvents) {
                             cancelEvent(event);
                         }
                         startTouches = targetTouches(event.touches);
@@ -725,8 +727,14 @@
                                 target.handleDrag(event);
                                 break;
                         }
-                        if (interaction) {
-                            cancelEvent(event);
+
+                        if (interaction
+                             || target.options.cancelNonInteractionEvents) {
+	                            cancelEvent(event);
+                        }
+
+                        if(interaction)
+                        {
                             target.update();
                         }
                     }
@@ -741,6 +749,77 @@
                     updateInteraction(event);
                 }
             });
+
+			var wheelTravel = 1;
+			el.addEventListener('mousewheel', function (event) {
+				if(!target.enabled)
+					return;
+
+				var delta = Math.max(-1, Math.min(1, (event.wheelDelta || -event.detail)));
+
+				wheelTravel += delta;
+				if(wheelTravel < 2)
+				{
+					wheelTravel = 1;
+					target.zoomOutAnimation();
+				}
+				else
+				{
+					// TODO: the center here isn't quite right;
+					// hopefully original author has better idea
+					// of what it should be.
+					target.scale(wheelTravel, { x: event.offsetX, y: event.offsetY });
+				}
+
+				target.update();
+				cancelEvent(event);
+			});
+
+			var mousePos = {};
+			el.addEventListener('mousedown', function(event) {
+				if(!target.enabled)
+					return;
+
+				if(!target.canDrag())
+					return;
+
+				mousePos.x = event.pageX;
+				mousePos.y = event.pageY;
+
+				var moved = function(event)
+				{
+					mousePos.x = event.pageX;
+					mousePos.y = event.pageY;
+					el.removeEventListener('mousemove', moved);
+					cancelEvent(event);
+				};
+				el.addEventListener('mousemove', moved);
+
+				var upd = function(event)
+				{
+					if(mousePos.x == event.pageX
+						&& mousePos.y == event.pageY)
+					{
+						// mouse click. 
+					}
+					else
+					{
+						var offset = {
+							x: (mousePos.x - event.pageX),
+							y: (mousePos.y - event.pageY)
+						}
+
+						target.addOffset(offset);
+						target.update();
+					}
+
+					el.removeEventListener('mouseup', upd);
+					cancelEvent(event);
+				};
+				el.addEventListener('mouseup', upd);
+
+				cancelEvent(event);
+			});
         };
 
         return PinchZoom;
@@ -754,4 +833,20 @@
         window.RTP = window.RTP || {};
         window.RTP.PinchZoom = definePinchZoom(window.$);
     }
+
+	// provide a standard jQuery hook point
+	(function($)
+	{
+		$.fn.pinchzoom = function(options)
+		{
+			options = options || {};
+
+			// so we can be chained
+			//@see http://docs.jquery.com/Plugins/Authoring
+			return this.each(function()
+			{
+				new RTP.PinchZoom(this, options);	
+			});
+		};
+	})(jQuery);
 }).call(this);
