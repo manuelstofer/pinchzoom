@@ -12,8 +12,8 @@ PinchZoom.js is a Javascript library providing multi touch gestures for zooming 
 
 ```Javascript
 
-let el = document.querySelector('#my-element');
-let pz = new PinchZoom(el), options);
+let el = document.querySelector('#my-id');
+let pz = new PinchZoom(el, options);
 
 ```
 
@@ -21,18 +21,17 @@ let pz = new PinchZoom(el), options);
 
 ```Text
 
-tapZoomFactor:      The zoom factor a double tap zooms to. (default 2)
-zoomOutFactor:      Resizes to original size when zoom factor is below the configured value. (default 1.3)
-animationDuration:  The animation duration in milliseconds. (default 300)
-maxZoom:            The maximum zoom factor. (default 4)
-minZoom:            The minimum zoom factor. (default 0.5)
-lockDragAxis        Locks panning of the element to a single axis. (default false)
-
+tapZoomFactor:      Zoom factor that a double tap zooms to. (default 2)
+zoomOutFactor:      Resizes to original size when zoom factor is below this value. (default 1.3)
+animationDuration:  Animation duration in milliseconds. (default 300)
+maxZoom:            Maximum zoom factor. (default 4)
+minZoom:            Minimum zoom factor. (default 0.5)
+lockDragAxis:       Lock panning of the element to a single axis. (default false)
 ```
 
 # Events
 
-Pinchzoom emits some custom events you can listen to
+Pinchzoom emits some custom events you can listen to:
 
 ```Text
 
@@ -40,18 +39,24 @@ pz_zoomstart  Started to zoom
 pz_zoomend    Stopped zooming
 pz_dragstart  Started to drag the element
 pz_dragend    Stopped to drag the element
-pz_doubletap  Resetting the zoom with doubletab
+pz_doubletap  Resetting the zoom with double-tab
 
 ```
 
 ### Methods
 
-```Text
+```Javascript
+let pz = new PinchZoom(myElement);
 
-enable:             Enables all gesture capturing (default)
-disable:            Disables all gesture capturing
+pz.enable(); // Enables all gesture capturing (is enabled by default)
+pz.disable(); // Disables all gesture capturing
 
 ```
+
+### Troubleshooting
+
+- If you have issues with invisible images, make sure that the image isn't absolutely positioned.
+  In some cases that will cause trouble.
 
 ## License
 
