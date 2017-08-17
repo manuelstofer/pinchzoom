@@ -5,6 +5,7 @@ PinchZoom.js is a Javascript library providing multi touch gestures for zooming 
 ## Usage
 
 ### Requirements
+* No dependencies, built with vanilla JS.
 * ECMA 5 support (http://caniuse.com/use-strict).
 
 ### Initialisation
@@ -52,10 +53,10 @@ disable:            Disables all gesture capturing
 
 ```
 
-## Licence
+## License
 
 PinchZoom is licensed under the [MIT License](http://opensource.org/licenses/MIT).
 
 ## Github Page with demo
 
-http://rtp-ch.github.com/pinchzoom/
+http://manuelstofer.github.com/pinchzoom/
