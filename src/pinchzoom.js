@@ -80,7 +80,7 @@
 
         /**
          * Pinch zoom
-         * @version 0.0.2
+         * @version 2.0.0
          * @author Manuel Stofer <mst@rtp.ch>
          * @param el
          * @param options
