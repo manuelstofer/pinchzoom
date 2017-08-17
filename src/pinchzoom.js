@@ -1,6 +1,6 @@
 /*
 
-    Copyright (c) Manuel Stofer 2013 - rtp.ch - RTP.PinchZoom.js
+    Copyright (c) Manuel Stofer 2013 - today, PinchZoom.js
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -799,7 +799,10 @@
             return definePinchZoom();
         });
     } else {
+        window.PinchZoom = definePinchZoom();
+
+        // RTP is a legacy namespace, keep for backwards compatiblity
         window.RTP = window.RTP || {};
-        window.RTP.PinchZoom = definePinchZoom();
+        window.RTP.PinchZoom = window.PinchZoom;
     }
 }).call(this);
