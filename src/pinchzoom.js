@@ -23,13 +23,63 @@
 */
 
 
-/*global jQuery, console, define, setTimeout, window*/
+/*global console, define, setTimeout, window*/
 (function () {
     'use strict';
-    var definePinchZoom = function ($) {
+
+    // polyfills
+    if (typeof Object.assign != 'function') {
+      // Must be writable: true, enumerable: false, configurable: true
+      Object.defineProperty(Object, "assign", {
+        value: function assign(target, varArgs) { // .length of function is 2
+          if (target == null) { // TypeError if undefined or null
+            throw new TypeError('Cannot convert undefined or null to object');
+          }
+
+          var to = Object(target);
+
+          for (var index = 1; index < arguments.length; index++) {
+            var nextSource = arguments[index];
+
+            if (nextSource != null) { // Skip over if undefined or null
+              for (var nextKey in nextSource) {
+                // Avoid bugs when hasOwnProperty is shadowed
+                if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
+                  to[nextKey] = nextSource[nextKey];
+                }
+              }
+            }
+          }
+          return to;
+        },
+        writable: true,
+        configurable: true
+      });
+    }
+
+    if (typeof Array.from != 'function') {
+      Array.from = function (object) {
+        return [].slice.call(object);
+      };
+    }
+
+    // utils
+    var buildElement = function(str) {
+      var tmp = document.implementation.createHTMLDocument();
+      tmp.body.innerHTML = str;
+      return Array.from(tmp.body.children)[0];
+    };
+
+    var triggerEvent = function(el, name) {
+      var event = document.createEvent('HTMLEvents');
+      event.initEvent(name, true, false);
+      el.dispatchEvent(event);
+    };
+
+    var definePinchZoom = function () {
 
         /**
-         * Pinch zoom using jQuery
+         * Pinch zoom
          * @version 0.0.2
          * @author Manuel Stofer <mst@rtp.ch>
          * @param el
@@ -37,14 +87,14 @@
          * @constructor
          */
         var PinchZoom = function (el, options) {
-                this.el = $(el);
+                this.el = el;
                 this.zoomFactor = 1;
                 this.lastScale = 1;
                 this.offset = {
                     x: 0,
                     y: 0
                 };
-                this.options = $.extend({}, this.defaults, options);
+                this.options = Object.assign({}, this.defaults, options);
                 this.setupMarkup();
                 this.bindEvents();
                 this.update();
@@ -81,7 +131,7 @@
              * @param event
              */
             handleDragStart: function (event) {
-                this.el.trigger(this.options.dragStartEventName);
+                triggerEvent(this.el, this.options.dragStartEventName);
                 this.stopAnimation();
                 this.lastDragPosition = false;
                 this.hasInteraction = true;
@@ -93,7 +143,6 @@
              * @param event
              */
             handleDrag: function (event) {
-
                 if (this.zoomFactor > 1.0) {
                     var touch = this.getTouches(event)[0];
                     this.drag(touch, this.lastDragPosition);
@@ -103,7 +152,7 @@
             },
 
             handleDragEnd: function () {
-                this.el.trigger(this.options.dragEndEventName);
+                triggerEvent(this.el, this.options.dragEndEventName);
                 this.end();
             },
 
@@ -112,7 +161,7 @@
              * @param event
              */
             handleZoomStart: function (event) {
-                this.el.trigger(this.options.zoomStartEventName);
+                triggerEvent(this.el, this.options.zoomStartEventName);
                 this.stopAnimation();
                 this.lastScale = 1;
                 this.nthZoom = 0;
@@ -125,7 +174,6 @@
              * @param event
              */
             handleZoom: function (event, newScale) {
-
                 // a relative scale factor is used
                 var touchCenter = this.getTouchCenter(this.getTouches(event)),
                     scale = newScale / this.lastScale;
@@ -142,7 +190,7 @@
             },
 
             handleZoomEnd: function () {
-                this.el.trigger(this.options.zoomEndEventName);
+                triggerEvent(this.el, this.options.zoomEndEventName);
                 this.end();
             },
 
@@ -166,7 +214,7 @@
                 }
 
                 this.animate(this.options.animationDuration, updateProgress, this.swing);
-                this.el.trigger(this.options.doubleTapEventName);
+                triggerEvent(this.el, this.options.doubleTapEventName);
             },
 
             /**
@@ -356,10 +404,7 @@
              * @return the initial zoom factor
              */
             getInitialZoomFactor: function () {
-                // use .offsetWidth instead of width()
-                // because jQuery-width() return the original width but Zepto-width() will calculate width with transform.
-                // the same as .height()
-                return this.container[0].offsetWidth / this.el[0].offsetWidth;
+                return this.container.offsetWidth / this.el.offsetWidth;
             },
 
             /**
@@ -367,7 +412,7 @@
              * @return the aspect ratio
              */
             getAspectRatio: function () {
-                return this.el[0].offsetWidth / this.el[0].offsetHeight;
+                return this.el.offsetWidth / this.el.offsetHeight;
             },
 
             /**
@@ -379,22 +424,22 @@
 
                 // uses following formula to calculate the zoom center x value
                 // offset_left / offset_right = zoomcenter_x / (container_x - zoomcenter_x)
-                var length = this.container[0].offsetWidth * this.zoomFactor,
+                var length = this.container.offsetWidth * this.zoomFactor,
                     offsetLeft  = this.offset.x,
-                    offsetRight = length - offsetLeft -this.container[0].offsetWidth,
+                    offsetRight = length - offsetLeft - this.container.offsetWidth,
                     widthOffsetRatio = offsetLeft / offsetRight,
-                    centerX = widthOffsetRatio * this.container[0].offsetWidth / (widthOffsetRatio + 1),
+                    centerX = widthOffsetRatio * this.container.offsetWidth / (widthOffsetRatio + 1),
 
                 // the same for the zoomcenter y
-                    height = this.container[0].offsetHeight * this.zoomFactor,
+                    height = this.container.offsetHeight * this.zoomFactor,
                     offsetTop  = this.offset.y,
-                    offsetBottom = height - offsetTop - this.container[0].offsetHeight,
+                    offsetBottom = height - offsetTop - this.container.offsetHeight,
                     heightOffsetRatio = offsetTop / offsetBottom,
-                    centerY = heightOffsetRatio * this.container[0].offsetHeight / (heightOffsetRatio + 1);
+                    centerY = heightOffsetRatio * this.container.offsetHeight / (heightOffsetRatio + 1);
 
                 // prevents division by zero
-                if (offsetRight === 0) { centerX = this.container[0].offsetWidth; }
-                if (offsetBottom === 0) { centerY = this.container[0].offsetHeight; }
+                if (offsetRight === 0) { centerX = this.container.offsetWidth; }
+                if (offsetBottom === 0) { centerY = this.container.offsetHeight; }
 
                 return {
                     x: centerX,
@@ -412,11 +457,14 @@
              * @return array touches
              */
             getTouches: function (event) {
-                var position = this.container.offset();
+                var rect = this.container.getBoundingClientRect();
+                var posTop = rect.top + document.body.scrollTop;
+                var posLeft = rect.left + document.body.scrollLeft;
+
                 return Array.prototype.slice.call(event.touches).map(function (touch) {
                     return {
-                        x: touch.pageX - position.left,
-                        y: touch.pageY - position.top
+                        x: touch.pageX - posLeft,
+                        y: touch.pageY - posTop,
                     };
                 });
             },
@@ -473,39 +521,35 @@
             },
 
             getContainerX: function () {
-                return this.container[0].offsetWidth;
+                return this.container.offsetWidth;
             },
 
             getContainerY: function () {
-                return this.container[0].offsetHeight;
+                return this.container.offsetHeight;
             },
 
             setContainerY: function (y) {
-                return this.container.height(y);
+                return this.container.style.height = y + 'px';
             },
 
             /**
              * Creates the expected html structure
              */
             setupMarkup: function () {
-                this.container = $('<div class="pinch-zoom-container"></div>');
-                this.el.before(this.container);
-                this.container.append(this.el);
+                this.container = buildElement('<div class="pinch-zoom-container"></div>');
+                this.el.parentNode.insertBefore(this.container, this.el);
+                this.container.appendChild(this.el);
 
-                this.container.css({
-                    'overflow': 'hidden',
-                    'position': 'relative'
-                });
+                this.container.style.overflow = 'hidden';
+                this.container.style.position = 'relative';
 
-                // Zepto doesn't recognize `webkitTransform..` style
-                this.el.css({
-                    '-webkit-transform-origin': '0% 0%',
-                    '-moz-transform-origin': '0% 0%',
-                    '-ms-transform-origin': '0% 0%',
-                    '-o-transform-origin': '0% 0%',
-                    'transform-origin': '0% 0%',
-                    'position': 'absolute'
-                });
+                this.el.style.webkitTransformOrigin = '0% 0%';
+                this.el.style.mozTransformOrigin = '0% 0%';
+                this.el.style.msTransformOrigin = '0% 0%';
+                this.el.style.oTransformOrigin = '0% 0%';
+                this.el.style.transformOrigin = '0% 0%';
+
+                this.el.style.position = 'absolute';
             },
 
             end: function () {
@@ -518,17 +562,23 @@
              * Binds all required event listeners
              */
             bindEvents: function () {
-                detectGestures(this.container.get(0), this);
-                // Zepto and jQuery both know about `on`
-                $(window).on('resize', this.update.bind(this));
-                $(this.el).find('img').on('load', this.update.bind(this));
+                var self = this;
+                detectGestures(this.container, this);
+
+                window.addEventListener('resize', this.update.bind(this));
+                Array.from(this.el.querySelectorAll('img')).forEach(function(imgEl) {
+                  imgEl.addEventListener('load', self.update.bind(self));
+                });
+
+                if (this.el.nodeName === 'IMG') {
+                  this.el.addEventListener('load', this.update.bind(this));
+                }
             },
 
             /**
              * Updates the css values according to the current zoom factor and offset
              */
             update: function () {
-
                 if (this.updatePlaned) {
                     return;
                 }
@@ -547,7 +597,7 @@
                             'translate('   + offsetX    + 'px,' + offsetY    + 'px)',
                         removeClone = (function () {
                             if (this.clone) {
-                                this.clone.remove();
+                                this.clone.parentNode.removeChild(this.clone);
                                 delete this.clone;
                             }
                         }).bind(this);
@@ -559,31 +609,29 @@
                     if (!this.options.use2d || this.hasInteraction || this.inAnimation) {
                         this.is3d = true;
                         removeClone();
-                        this.el.css({
-                            '-webkit-transform':  transform3d,
-                            '-o-transform':       transform2d,
-                            '-ms-transform':      transform2d,
-                            '-moz-transform':     transform2d,
-                            'transform':        transform3d
-                        });
-                    } else {
 
+                        this.el.style.webkitTransform = transform3d;
+                        this.el.style.mozTransform = transform2d;
+                        this.el.style.msTransform = transform2d;
+                        this.el.style.oTransform = transform2d;
+                        this.el.style.transform = transform3d;
+                    } else {
                         // When changing from 3d to 2d transform webkit has some glitches.
                         // To avoid this, a copy of the 3d transformed element is displayed in the
                         // foreground while the element is converted from 3d to 2d transform
                         if (this.is3d) {
-                            this.clone = this.el.clone();
-                            this.clone.css('pointer-events', 'none');
-                            this.clone.appendTo(this.container);
+                            this.clone = this.el.cloneNode(true);
+                            this.clone.style.pointerEvents = 'none';
+                            this.container.appendChild(this.clone);
                             setTimeout(removeClone, 200);
                         }
-                        this.el.css({
-                            '-webkit-transform':  transform2d,
-                            '-o-transform':       transform2d,
-                            '-ms-transform':      transform2d,
-                            '-moz-transform':     transform2d,
-                            'transform':        transform2d
-                        });
+
+                        this.el.style.webkitTransform = transform2d;
+                        this.el.style.mozTransform = transform2d;
+                        this.el.style.msTransform = transform2d;
+                        this.el.style.oTransform = transform2d;
+                        this.el.style.transform = transform2d;
+
                         this.is3d = false;
                     }
                 }).bind(this), 0);
@@ -647,7 +695,7 @@
                 },
 
                 targetTouches = function (touches) {
-                    return Array.prototype.slice.call(touches).map(function (touch) {
+                    return Array.from(touches).map(function (touch) {
                         return {
                             x: touch.pageX,
                             y: touch.pageY
@@ -747,11 +795,11 @@
     };
 
     if (typeof define !== 'undefined' && define.amd) {
-        define(['jquery'], function ($) {
-            return definePinchZoom($);
+        define(function () {
+            return definePinchZoom();
         });
     } else {
         window.RTP = window.RTP || {};
-        window.RTP.PinchZoom = definePinchZoom(window.$);
+        window.RTP.PinchZoom = definePinchZoom();
     }
 }).call(this);
