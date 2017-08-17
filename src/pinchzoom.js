@@ -80,7 +80,7 @@
 
         /**
          * Pinch zoom
-         * @version 0.0.2
+         * @version 2.0.0
          * @author Manuel Stofer <mst@rtp.ch>
          * @param el
          * @param options
@@ -800,9 +800,5 @@
         });
     } else {
         window.PinchZoom = definePinchZoom();
-
-        // RTP is a legacy namespace, keep for backwards compatiblity
-        window.RTP = window.RTP || {};
-        window.RTP.PinchZoom = window.PinchZoom;
     }
 }).call(this);
