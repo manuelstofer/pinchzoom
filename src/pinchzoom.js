@@ -65,7 +65,8 @@
 
     // utils
     var buildElement = function(str) {
-      var tmp = document.implementation.createHTMLDocument(''); // require title parameter for working IE and ME
+      // empty string as title argument required by IE and Edge
+      var tmp = document.implementation.createHTMLDocument('');
       tmp.body.innerHTML = str;
       return Array.from(tmp.body.children)[0];
     };
