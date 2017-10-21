@@ -1,12 +1,12 @@
 # PinchZoom.js
 
-PinchZoom.js is a Javascript library providing multi touch gestures for zooming and dragging on any DOM element.
+PinchZoom is a Javascript library providing multi-touch gestures for zooming and dragging on any DOM element.
 
 ## Usage
 
 ### Requirements
 * No dependencies, built with vanilla JS.
-* ECMA 5 support (http://caniuse.com/use-strict).
+* A modern browser (ECMA 5 support, http://caniuse.com/use-strict).
 
 ### Initialisation
 
@@ -29,7 +29,7 @@ minZoom:            Minimum zoom factor. (default 0.5)
 lockDragAxis:       Lock panning of the element to a single axis. (default false)
 ```
 
-# Events
+### Events
 
 Pinchzoom emits some custom events you can listen to:
 
@@ -60,8 +60,8 @@ pz.disable(); // Disables all gesture capturing
 
 ## License
 
-PinchZoom is licensed under the [MIT License](http://opensource.org/licenses/MIT).
+Licensed under the [MIT License](http://opensource.org/licenses/MIT).
 
 ## Github Page with demo
 
-http://manuelstofer.github.com/pinchzoom/
+https://manuelstofer.github.com/pinchzoom/
