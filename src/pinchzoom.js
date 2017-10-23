@@ -730,7 +730,7 @@
                     }
 
                     if (time - lastTouchStart < 300) {
-                        cancelEvent(event);
+                        setTimeout(function () { cancelEvent(event) });
 
                         target.handleDoubleTap(event);
                         switch (interaction) {
@@ -753,6 +753,9 @@
                 if(target.enabled) {
                     firstMove = true;
                     fingers = event.touches.length;
+                    if(fingers > 1) {
+                        cancelEvent(event);
+                     }
                     detectDoubleTap(event);
                 }
             });
