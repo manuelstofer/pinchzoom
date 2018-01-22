@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Pinchzoom.js Demo</title>
+
+    <style type="text/css">
+        .landscape {
+            width: 500px;
+            height: 300px;
+            overflow: hidden;
+            border: green 1px solid;
+            margin: 1em;
+            float: left;
+        }
+
+        .portrait {
+            width: 300px;
+            height: 500px;
+            overflow: hidden;
+            border: red 1px solid;
+            margin: 1em;
+            float: left;
+        }
+
+        .switch {
+            width: 90vw;
+            height: 90vh;
+            overflow: hidden;
+            border: purple 1px solid;
+            margin: 1em;
+            float: left;
+        }
+    </style>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+
+    <script type="text/javascript" src="../dist/pinch-zoom.umd.js"></script>
+</head>
+<body>
+
+
+<div class="ll landscape">
+    <div class="zoom1">
+        <img src="kitten-wide.jpg"/>
+        <p>should also zoom</p>
+    </div>
+</div>
+
+<div class="lp landscape">
+    <div class="zoom2">
+        <img src="kitten-tall.jpg"/>
+        <p>should also zoom</p>
+    </div>
+</div>
+
+<div class="pl portrait">
+    <div class="zoom3">
+        <img src="kitten-wide.jpg"/>
+        <p>should also zoom</p>
+    </div>
+</div>
+
+<div class="pp portrait">
+    <div class="zoom4">
+        <img src="kitten-tall.jpg"/>
+        <p>should also zoom</p>
+    </div>
+</div>
+
+<div class="switch">
+    <div class="zoom5">
+        <img src="kitten-wide.jpg"/>
+        <p>should also zoom</p>
+    </div>
+</div>
+
+<script type="text/javascript">
+    new window.PinchZoom.default(document.querySelector('div.zoom1'), { verticalPadding:20, horizontalPadding: 30 });
+    new window.PinchZoom.default(document.querySelector('div.zoom2'), {});
+    new window.PinchZoom.default(document.querySelector('div.zoom3'), {});
+    new window.PinchZoom.default(document.querySelector('div.zoom4'), {});
+    new window.PinchZoom.default(document.querySelector('div.zoom5'), {});
+</script>
+
+</body>
+</html>
