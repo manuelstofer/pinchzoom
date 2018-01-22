@@ -90,11 +90,21 @@ var definePinchZoom = function () {
                 x: 0,
                 y: 0
             };
+            this.initialOffset = {
+                x: 0,
+                y: 0,
+            };
             this.options = Object.assign({}, this.defaults, options);
             this.setupMarkup();
             this.bindEvents();
             this.update();
-            // default enable.
+
+            // The image may already be loaded when PinchZoom is initialized,
+            // and then the load event (which trigger update) will never fire.
+            if (this.isImageLoaded(this.el)) {
+              this.setupInitialOffset();
+            }
+
             this.enable();
 
         },
@@ -212,6 +222,41 @@ var definePinchZoom = function () {
 
             this.animate(this.options.animationDuration, updateProgress, this.swing);
             triggerEvent(this.el, this.options.doubleTapEventName);
+        },
+
+        /**
+         * Compute the initial offset
+         *
+         * the element should be centered in the container upon initialization
+         */
+        computeInitialOffset: function () {
+            this.initialOffset = {
+                x: -Math.abs(this.el.offsetWidth * this.getInitialZoomFactor() - this.container.offsetWidth) / 2,
+                y: -Math.abs(this.el.offsetHeight * this.getInitialZoomFactor() - this.container.offsetHeight) / 2,
+            };
+        },
+
+        /**
+         * Determine if image is loaded
+         */
+        isImageLoaded: function (el) {
+            if (el.nodeName === 'IMG') {
+              return el.complete && el.naturalHeight !== 0;
+            } else {
+              return Array.from(el.querySelectorAll('img')).every((img) => this.isImageLoaded(img));
+            }
+        },
+
+        setupInitialOffset: function() {
+            if (this._initialOffsetSetup) {
+              return;
+            }
+
+            this._initialOffsetSetup = true;
+
+            this.computeInitialOffset();
+            this.offset.x = this.initialOffset.x;
+            this.offset.y = this.initialOffset.y;
         },
 
         /**
@@ -393,15 +438,17 @@ var definePinchZoom = function () {
          * Updates the aspect ratio
          */
         updateAspectRatio: function () {
-            this.setContainerY(this.getContainerX() / this.getAspectRatio());
+            this.setContainerY(this.container.parentElement.offsetHeight);
         },
 
         /**
          * Calculates the initial zoom factor (for the element to fit into the container)
-         * @return the initial zoom factor
+         * @return {number} the initial zoom factor
          */
         getInitialZoomFactor: function () {
-            return this.container.offsetWidth / this.el.offsetWidth;
+            var xZoomFactor = this.container.offsetWidth / this.el.offsetWidth;
+            var yZoomFactor = this.container.offsetHeight / this.el.offsetHeight;
+            return Math.min(xZoomFactor, yZoomFactor);
         },
 
         /**
@@ -418,25 +465,11 @@ var definePinchZoom = function () {
          * @return {Object} the current zoom center
          */
         getCurrentZoomCenter: function () {
+            const offsetLeft = this.offset.x - this.initialOffset.x;
+            const centerX = -1 * this.offset.x - offsetLeft / (1 / this.zoomFactor - 1);
 
-            // uses following formula to calculate the zoom center x value
-            // offset_left / offset_right = zoomcenter_x / (container_x - zoomcenter_x)
-            var length = this.container.offsetWidth * this.zoomFactor,
-                offsetLeft  = this.offset.x,
-                offsetRight = length - offsetLeft - this.container.offsetWidth,
-                widthOffsetRatio = offsetLeft / offsetRight,
-                centerX = widthOffsetRatio * this.container.offsetWidth / (widthOffsetRatio + 1),
-
-            // the same for the zoomcenter y
-                height = this.container.offsetHeight * this.zoomFactor,
-                offsetTop  = this.offset.y,
-                offsetBottom = height - offsetTop - this.container.offsetHeight,
-                heightOffsetRatio = offsetTop / offsetBottom,
-                centerY = heightOffsetRatio * this.container.offsetHeight / (heightOffsetRatio + 1);
-
-            // prevents division by zero
-            if (offsetRight === 0) { centerX = this.container.offsetWidth; }
-            if (offsetBottom === 0) { centerY = this.container.offsetHeight; }
+            const offsetTop = this.offset.y - this.initialOffset.y;
+            const centerY = -1 * this.offset.y - offsetTop / (1 / this.zoomFactor - 1);
 
             return {
                 x: centerX,
@@ -577,7 +610,7 @@ var definePinchZoom = function () {
         /**
          * Updates the css values according to the current zoom factor and offset
          */
-        update: function () {
+        update: function (event) {
             if (this.updatePlaned) {
                 return;
             }
@@ -586,6 +619,14 @@ var definePinchZoom = function () {
             window.setTimeout((function () {
                 this.updatePlaned = false;
                 this.updateAspectRatio();
+
+                if (event && event.type === 'resize') {
+                    this.computeInitialOffset();
+                }
+
+                if (event && event.type === 'load') {
+                  this.setupInitialOffset();
+                }
 
                 var zoomFactor = this.getInitialZoomFactor() * this.zoomFactor,
                     offsetX = -this.offset.x / zoomFactor,
