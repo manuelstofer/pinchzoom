@@ -116,8 +116,10 @@ var definePinchZoom = function () {
             lockDragAxis: false,
             use2d: true,
             zoomStartEventName: 'pz_zoomstart',
+            zoomUpdateEventName: 'pz_zoomupdate',
             zoomEndEventName: 'pz_zoomend',
             dragStartEventName: 'pz_dragstart',
+            dragUpdateEventName: 'pz_dragupdate',
             dragEndEventName: 'pz_dragend',
             doubleTapEventName: 'pz_doubletap'
         },
@@ -252,6 +254,7 @@ var definePinchZoom = function () {
                 x: (scale - 1) * (center.x + this.offset.x),
                 y: (scale - 1) * (center.y + this.offset.y)
             });
+            triggerEvent(this.el, this.options.zoomUpdateEventName);
         },
 
         /**
@@ -294,6 +297,7 @@ var definePinchZoom = function () {
                   x: -(center.x - lastCenter.x)
                 });
               }
+              triggerEvent(this.el, this.options.dragUpdateEventName);
             }
         },
 
