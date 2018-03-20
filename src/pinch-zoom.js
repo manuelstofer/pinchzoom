@@ -102,6 +102,7 @@ var definePinchZoom = function () {
             // The image may already be loaded when PinchZoom is initialized,
             // and then the load event (which trigger update) will never fire.
             if (this.isImageLoaded(this.el)) {
+              this.updateAspectRatio();
               this.setupInitialOffset();
             }
 
