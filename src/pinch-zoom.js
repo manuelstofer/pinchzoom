@@ -102,6 +102,7 @@ var definePinchZoom = function () {
             // The image may already be loaded when PinchZoom is initialized,
             // and then the load event (which trigger update) will never fire.
             if (this.isImageLoaded(this.el)) {
+              this.updateAspectRatio();
               this.setupInitialOffset();
             }
 
@@ -218,7 +219,7 @@ var definePinchZoom = function () {
                 return;
             }
 
-            this.isDoubleTab = true;
+            this.isDoubleTap = true;
 
             if (startZoomFactor > zoomFactor) {
                 center = this.getCurrentZoomCenter();
@@ -790,7 +791,7 @@ var definePinchZoom = function () {
                             break;
                     }
                 } else {
-                    target.isDoubleTab = false;
+                    target.isDoubleTap = false;
                 }
 
                 if (fingers === 1) {
@@ -808,7 +809,7 @@ var definePinchZoom = function () {
         });
 
         el.addEventListener('touchmove', function (event) {
-            if(target.enabled && !target.isDoubleTab) {
+            if(target.enabled && !target.isDoubleTap) {
                 if (firstMove) {
                     updateInteraction(event);
                     if (interaction) {
