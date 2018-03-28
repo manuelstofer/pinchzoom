@@ -76,7 +76,7 @@ var definePinchZoom = function () {
 
     /**
      * Pinch zoom
-     * @version 2.0.0
+     * @version 2.1.0
      * @author Manuel Stofer <mst@rtp.ch>
      * @param el
      * @param options

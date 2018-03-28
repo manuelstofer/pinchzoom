@@ -1,6 +1,6 @@
 {
   "name": "pinch-zoom-js",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Browser library for multi-touch gestures to zoom and drag on any DOM element.",
   "author": "Manuel Stofer",
   "license": "MIT",
