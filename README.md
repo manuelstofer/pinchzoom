@@ -26,6 +26,8 @@ zoomOutFactor:      Resizes to original size when zoom factor is below this valu
 animationDuration:  Animation duration in milliseconds. (default 300)
 maxZoom:            Maximum zoom factor. (default 4)
 minZoom:            Minimum zoom factor. (default 0.5)
+draggableUnzoomed:  Capture drag events even when the image isn't zoomed. (default true)
+                    (using `false` allows other libs (e.g. swipe) to pick up drag events)
 lockDragAxis:       Lock panning of the element to a single axis. (default false)
 use2d:              Fall back to 2D transforms when idle. (default true)
                     (a truthy value will still use 3D transforms during animation)
