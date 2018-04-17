@@ -248,7 +248,7 @@ var definePinchZoom = function () {
             if (el.nodeName === 'IMG') {
               return el.complete && el.naturalHeight !== 0;
             } else {
-              return Array.from(el.querySelectorAll('img')).every((img) => this.isImageLoaded(img));
+              return Array.from(el.querySelectorAll('img')).every(this.isImageLoaded);
             }
         },
 
