@@ -27,6 +27,10 @@ animationDuration:  Animation duration in milliseconds. (default 300)
 maxZoom:            Maximum zoom factor. (default 4)
 minZoom:            Minimum zoom factor. (default 0.5)
 lockDragAxis:       Lock panning of the element to a single axis. (default false)
+use2d:              Fall back to 2D transforms when idle. (default true)
+                    (a truthy value will still use 3D transforms during animation)
+verticalPadding:    Vertical padding to apply around the image. (default 0)
+horizontalPadding:  Horizontal padding to apply around the image. (default 0)
 ```
 
 ### Events
