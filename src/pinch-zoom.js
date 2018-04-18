@@ -124,6 +124,7 @@ var definePinchZoom = function () {
             animationDuration: 300,
             maxZoom: 4,
             minZoom: 0.5,
+            draggableUnzoomed: true,
             lockDragAxis: false,
             use2d: true,
             zoomStartEventName: 'pz_zoomstart',
@@ -318,6 +319,18 @@ var definePinchZoom = function () {
             this.zoomFactor *= scale;
             this.zoomFactor = Math.min(this.options.maxZoom, Math.max(this.zoomFactor, this.options.minZoom));
             return this.zoomFactor / originalZoomFactor;
+        },
+
+        /**
+         * Determine if the image is in a draggable state
+         *
+         * When the image can be dragged, the drag event is acted upon and cancelled.
+         * When not draggable, the drag event bubbles through this component.
+         *
+         * @return {Boolean}
+         */
+        canDrag: function () {
+            return this.options.draggableUnzoomed || !isCloseTo(this.zoomFactor, 1);
         },
 
         /**
@@ -737,7 +750,7 @@ var definePinchZoom = function () {
             updateInteraction = function (event) {
                 if (fingers === 2) {
                     setInteraction('zoom');
-                } else if (fingers === 1) {
+                } else if (fingers === 1 && target.canDrag()) {
                     setInteraction('drag', event);
                 } else {
                     setInteraction(null, event);
