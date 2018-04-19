@@ -61,6 +61,13 @@ pz.disable(); // Disables all gesture capturing
 
 ```
 
+### Release a New Version
+
+1. Make a bump commit (update package.json, package-lock.json, src and dist)
+2. Create a new tag `git tag -m "v2.2.0" v2.2.0`
+3. Release new NPM version (npm whoami; npm publish)
+4. Make a new Github release (https://github.com/manuelstofer/pinchzoom/releases)
+
 ### Troubleshooting
 
 - If you have issues with invisible images, make sure that the image isn't absolutely positioned.
