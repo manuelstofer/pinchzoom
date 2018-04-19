@@ -4,7 +4,7 @@
     Copyright (c) Manuel Stofer 2013 - today
 
     Author: Manuel Stofer (mst@rtp.ch)
-    Version: 2.1.0
+    Version: 2.2.0
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
