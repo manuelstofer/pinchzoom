@@ -86,10 +86,12 @@
 
     <script type="text/javascript">
       var el = document.querySelector('div.pinch-zoom');
-      new PinchZoom.default(el, {});
+      new PinchZoom.default(el, {
+        draggableUnzoomed: false,
+      });
 
       window.mySwipe = new Swipe(document.getElementById('slider'), {
-          speed: 400
+        speed: 400,
       });
     </script>
 
