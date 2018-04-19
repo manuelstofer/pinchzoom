@@ -1,6 +1,10 @@
 /*
 
-    Copyright (c) Manuel Stofer 2013 - today, PinchZoom.js
+    PinchZoom.js
+    Copyright (c) Manuel Stofer 2013 - today
+
+    Author: Manuel Stofer (mst@rtp.ch)
+    Version: 2.1.0
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -76,8 +80,6 @@ var definePinchZoom = function () {
 
     /**
      * Pinch zoom
-     * @version 2.1.0
-     * @author Manuel Stofer <mst@rtp.ch>
      * @param el
      * @param options
      * @constructor
