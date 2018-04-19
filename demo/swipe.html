@@ -16,7 +16,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
 
     <script type="text/javascript" src="swipe.js"></script>
-    <script type="text/javascript" src="../src/pinchzoom.js"></script>
+    <script type="text/javascript" src="../dist/pinch-zoom.umd.js"></script>
 </head>
 <body>
     <div class="page">
@@ -86,7 +86,7 @@
 
     <script type="text/javascript">
       var el = document.querySelector('div.pinch-zoom');
-      new PinchZoom(el, {});
+      new PinchZoom.default(el, {});
 
       window.mySwipe = new Swipe(document.getElementById('slider'), {
           speed: 400
