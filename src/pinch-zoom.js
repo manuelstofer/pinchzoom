@@ -105,7 +105,7 @@ var definePinchZoom = function () {
             // and then the load event (which trigger update) will never fire.
             if (this.isImageLoaded(this.el)) {
               this.updateAspectRatio();
-              this.setupInitialOffset();
+              this.setupOffsets();
             }
 
             this.enable();
@@ -245,6 +245,14 @@ var definePinchZoom = function () {
         },
 
         /**
+         * Reset current image offset to that of the initial offset
+         */
+        resetOffset: function() {
+            this.offset.x = this.initialOffset.x;
+            this.offset.y = this.initialOffset.y;
+        },
+
+        /**
          * Determine if image is loaded
          */
         isImageLoaded: function (el) {
@@ -255,7 +263,7 @@ var definePinchZoom = function () {
             }
         },
 
-        setupInitialOffset: function() {
+        setupOffsets: function() {
             if (this._initialOffsetSetup) {
               return;
             }
@@ -263,8 +271,7 @@ var definePinchZoom = function () {
             this._initialOffsetSetup = true;
 
             this.computeInitialOffset();
-            this.offset.x = this.initialOffset.x;
-            this.offset.y = this.initialOffset.y;
+            this.resetOffset();
         },
 
         /**
@@ -463,9 +470,13 @@ var definePinchZoom = function () {
         },
 
         /**
-         * Updates the aspect ratio
+         * Updates the container aspect ratio
+         *
+         * Any previous container height must be cleared before re-measuring the
+         * parent height, since it depends implicitly on the height of any of its children
          */
         updateAspectRatio: function () {
+            this.unsetContainerY();
             this.setContainerY(this.container.parentElement.offsetHeight);
         },
 
@@ -589,6 +600,10 @@ var definePinchZoom = function () {
             return this.container.style.height = y + 'px';
         },
 
+        unsetContainerY: function () {
+            this.container.style.height = null;
+        },
+
         /**
          * Creates the expected html structure
          */
@@ -647,10 +662,11 @@ var definePinchZoom = function () {
 
                 if (event && event.type === 'resize') {
                     this.computeInitialOffset();
+                    this.resetOffset();
                 }
 
                 if (event && event.type === 'load') {
-                  this.setupInitialOffset();
+                  this.setupOffsets();
                 }
 
                 var zoomFactor = this.getInitialZoomFactor() * this.zoomFactor,
