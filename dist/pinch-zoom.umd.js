@@ -673,14 +673,15 @@
 
                 window.setTimeout(function () {
                     this.updatePlaned = false;
-                    this.updateAspectRatio();
 
                     if (event && event.type === 'resize') {
+                        this.updateAspectRatio();
                         this.computeInitialOffset();
                         this.resetOffset();
                     }
 
                     if (event && event.type === 'load') {
+                        this.updateAspectRatio();
                         this.setupOffsets();
                     }
 
