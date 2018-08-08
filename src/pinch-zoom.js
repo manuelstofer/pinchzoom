@@ -264,12 +264,6 @@ var definePinchZoom = function () {
         },
 
         setupOffsets: function() {
-            if (this._initialOffsetSetup) {
-              return;
-            }
-
-            this._initialOffsetSetup = true;
-
             this.computeInitialOffset();
             this.resetOffset();
         },
@@ -661,8 +655,7 @@ var definePinchZoom = function () {
 
                 if (event && event.type === 'resize') {
                     this.updateAspectRatio();
-                    this.computeInitialOffset();
-                    this.resetOffset();
+                    this.setupOffsets();
                 }
 
                 if (event && event.type === 'load') {

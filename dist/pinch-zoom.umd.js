@@ -284,12 +284,6 @@
             },
 
             setupOffsets: function setupOffsets() {
-                if (this._initialOffsetSetup) {
-                    return;
-                }
-
-                this._initialOffsetSetup = true;
-
                 this.computeInitialOffset();
                 this.resetOffset();
             },
@@ -676,8 +670,7 @@
 
                     if (event && event.type === 'resize') {
                         this.updateAspectRatio();
-                        this.computeInitialOffset();
-                        this.resetOffset();
+                        this.setupOffsets();
                     }
 
                     if (event && event.type === 'load') {
