@@ -148,6 +148,7 @@
                 minZoom: 0.5,
                 draggableUnzoomed: true,
                 lockDragAxis: false,
+                setOffsetsOnce: false,
                 use2d: true,
                 zoomStartEventName: 'pz_zoomstart',
                 zoomUpdateEventName: 'pz_zoomupdate',
@@ -284,6 +285,12 @@
             },
 
             setupOffsets: function setupOffsets() {
+                if (this.options.setOffsetsOnce && this._isOffsetsSet) {
+                    return;
+                }
+
+                this._isOffsetsSet = true;
+
                 this.computeInitialOffset();
                 this.resetOffset();
             },
