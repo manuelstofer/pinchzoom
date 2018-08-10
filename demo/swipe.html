@@ -3,14 +3,12 @@
 <head>
     <title>Pinchzoom.js Demo</title>
 
-    <style type="text/css">
-        div.pinch-zoom,
-        div.pinch-zoom img {
-            width: 100%;
-            -webkit-user-drag: none;
-        }
+    <style type='text/css'>
+      .slider {
+        width: 100vw;
+        height: 100vh;
+      }
     </style>
-
     <link rel="stylesheet" href="style.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -23,7 +21,7 @@
         <div id='slider'>
             <ul>
                 <li style='display:block'>
-
+                  <div class="pinch-zoom-parent">
                     <div class="pinch-zoom">
                         <div class="description">
                             <h1>Pinchzoom.js</h1>
@@ -32,13 +30,11 @@
                             </p>
                         </div>
                         <img src="frog.jpg"/>
-                        <a class="image" href="http://www.flickr.com/photos/59446027@N00/5258583198" target="_blank">
-                          by Peter Nijenhuis on Flickr; Some rights reserved
-                        </a>
                     </div>
-
+                  </div>
                 </li>
                 <li style='display:none'>
+                  <div class="pinch-zoom-parent">
                     <div class="pinch-zoom">
                         <div class="description">
                             <h1>Pinchzoom.js</h1>
@@ -47,12 +43,11 @@
                             </p>
                         </div>
                         <img src="frog.jpg"/>
-                        <a class="image" href="http://www.flickr.com/photos/59446027@N00/5258583198" target="_blank">
-                          by Peter Nijenhuis on Flickr; Some rights reserved
-                        </a>
                     </div>
+                  </div>
                 </li>
                 <li style='display:none'>
+                  <div class="pinch-zoom-parent">
                     <div class="pinch-zoom">
                         <div class="description">
                             <h1>Pinchzoom.js</h1>
@@ -61,12 +56,11 @@
                             </p>
                         </div>
                         <img src="frog.jpg"/>
-                        <a class="image" href="http://www.flickr.com/photos/59446027@N00/5258583198" target="_blank">
-                          by Peter Nijenhuis on Flickr; Some rights reserved
-                        </a>
                     </div>
+                  </div>
                 </li>
                 <li style='display:none'>
+                  <div class="pinch-zoom-parent">
                     <div class="pinch-zoom">
                         <div class="description">
                             <h1>Pinchzoom.js</h1>
@@ -75,22 +69,19 @@
                             </p>
                         </div>
                         <img src="frog.jpg"/>
-                        <a class="image" href="http://www.flickr.com/photos/59446027@N00/5258583198" target="_blank">
-                          by Peter Nijenhuis on Flickr; Some rights reserved
-                        </a>
                     </div>
+                  </div>
                 </li>
             </ul>
 
     </div>
 
-    <script type="text/javascript">
-      var el = document.querySelector('div.pinch-zoom');
-      new PinchZoom.default(el, {
-        draggableUnzoomed: false,
+    <script type='text/javascript'>
+      Array.from(document.querySelectorAll('.pinch-zoom')).forEach(function(el) {
+        new PinchZoom.default(el, {});
       });
 
-      window.mySwipe = new Swipe(document.getElementById('slider'), {
+      window.mySwipe = new Swipe(document.querySelector('#slider'), {
         speed: 400,
       });
     </script>
