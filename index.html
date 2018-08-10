@@ -1,104 +1,66 @@
-<!DOCTYPE HTML>
+<!doctype html>
 <html>
-<head>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width = 650, initial-scale = 1.0" />
+    <title>PinchZoom.js</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
 
-        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-        <meta name="viewport" content="width = 650, initial-scale = 1.0" />
-        <title>RTP.PinchZoom.js</title>
-        <link rel="stylesheet" href="http://fast.fonts.com/cssapi/1512fd52-6f8e-4a3f-84cc-a361d194a44c.css"/>
-        <link rel="stylesheet" href="style.css" />
-</head>
-<body>
+  <body>
+    <div class="page">
+      <header>
+        <h1>PinchZoom.js</h1>
+        <p>Zoom any DOM element using multi-touch gestures.</p>
+      </header>
 
-<div id="page">
+      <main>
+        <article>
+          <h2>Features</h2>
 
-    <div class="page-head">
-        <div class="teaser">
-            <p class="title">RTP.PinchZoom.js</p>
-            <p class="emphasis">Zoom any DOM element<br/>using multi-touch gestures known from iOS devices.<br/>
-            </p>
-        </div>
+          <p>
+            <ul>
+              <li>PinchZoom</li>
+              <li>Double tap zoom</li>
+              <li>Dragging</li>
+              <li>No dependencies</li>
+              <li>Support for AMD module loaders</li>
+              <li>Hardware acceleration, using 3D CSS transformations</li>
+            </ul>
+          </p>
+
+          <div class="links">
+            <a href="demo/pinchzoom.html">Demo</a>
+            <a href="https://github.com/manuelstofer/pinchzoom/releases">Download</a>
+            <a href="https://github.com/manuelstofer/pinchzoom">View on Github</a>
+          </div>
+        </article>
+
+        <article>
+          <h2>Device support</h2>
+
+          <p>
+            Works on both iOS and Android. Currently used in multiple iOS and Android apps.
+          </p>
+        </article>
+
+        <article>
+          <h2>Swipe</h2>
+
+          <p>
+            It's possible to combine PinchZoom with other libraries like
+            <a href="http://lyfeyaj.github.io/swipe/">swipe.js</a>. It cares about event bubbling: Unused touch events are bubbling up in the DOM and can be handled by other libraries.
+          </p>
+
+          <p>
+            <a href="demo/swipe.html">Demo: Swipe + PinchZoom</a>
+          </p>
+        </article>
+      </main>
+
+      <footer>
+        PinchZoom.js is free software (MIT)
+      </footer>
     </div>
-
-    <div class="content">
-
-        <div class="content-block two-cols">
-            <div class="col-1">
-                <h1>Features</h1>
-            </div>
-            <div class="col-2">
-                <p>
-                    <ul>
-                        <li>PinchZoom</li>
-                        <li>Double tap zoom</li>
-                        <li>Dragging</li>
-                        <li>Support for AMD module loaders</li>
-                        <li>Hardware acceleration, using 3D CSS transformations</li>
-                    </ul>
-                </p>
-                <ul class="links">
-
-                </ul>
-                <ul class="links">
-                    <li><a href="demo/pinchzoom.html">Demo</a></li>
-                    <li><a href="src/pinchzoom.js">Download</a></li>
-                    <li><a href="https://github.com/rtp-ch/pinchzoom">View on Github</a></li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="content-block two-cols">
-            <div class="col-1">
-                <h1>Device support</h1>
-            </div>
-            <div class="col-2">
-                <p>
-                    It was developed for a webbased iPad application. So its well tested
-                    on mobile Safari for iOS devices. Other devices might work as well but are currently
-                    not tested.
-                </p>
-                <p>
-                    RTP.PinchZoom.js depends on Underscore.js and jQuery.
-                </p>
-            </div>
-        </div>
-
-        <div class="content-block two-cols">
-            <div class="col-1"><h2>Swipe</h2></div>
-            <div class="col-2">
-                <p>
-                    It's possible to combine PinchZoom with other libraries like <a href="http://swipejs.com/">swipe.js</a>.
-                    It cares about event bubbling: Unused touch events are bubbling up in
-                    the DOM and can be handled by other libraries.<br/>
-                </p>
-                <p>
-                    <a href="demo/swipe.html">Demo: Swipe + PinchZoom</a>
-                </p>
-            </div>
-        </div>
-
-        <div class="content-block two-cols last">
-            <div class="col-1">
-                <h2>License</h2>
-            </div>
-            <div class="col-2">
-                <p>
-                    RTP.PinchZoom.js is free software; you can redistribute it and/or modify it under
-                    the terms of the <a href="http://opensource.org/licenses/MIT">MIT License</a>.
-                </p>
-            </div>
-        </div>
-
-    </div>
-
-    <div id="footer">
-            <img width="32" height="16" src="img/rtp-logo-small.gif" alt="RTP Logo">
-            Rüegg Tuck Partner GmbH, Josefstrasse 92, CH-8005 Zürich
-            <a class="home" href="http://www.rtp.ch/?pk_campaign=github&pk_kwd=rtp.pinchzoom.js" target="_blank">www.rtp.ch</a>
-    </div>
-
-</div>
-
-</body>
+  </body>
 </html>
-
