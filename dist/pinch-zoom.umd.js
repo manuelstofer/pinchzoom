@@ -126,7 +126,7 @@
             // and then the load event (which trigger update) will never fire.
             if (this.isImageLoaded(this.el)) {
                 this.updateAspectRatio();
-                this.setupInitialOffset();
+                this.setupOffsets();
             }
 
             this.enable();
@@ -148,6 +148,7 @@
                 minZoom: 0.5,
                 draggableUnzoomed: true,
                 lockDragAxis: false,
+                setOffsetsOnce: false,
                 use2d: true,
                 zoomStartEventName: 'pz_zoomstart',
                 zoomUpdateEventName: 'pz_zoomupdate',
@@ -265,6 +266,14 @@
             },
 
             /**
+             * Reset current image offset to that of the initial offset
+             */
+            resetOffset: function resetOffset() {
+                this.offset.x = this.initialOffset.x;
+                this.offset.y = this.initialOffset.y;
+            },
+
+            /**
              * Determine if image is loaded
              */
             isImageLoaded: function isImageLoaded(el) {
@@ -275,16 +284,15 @@
                 }
             },
 
-            setupInitialOffset: function setupInitialOffset() {
-                if (this._initialOffsetSetup) {
+            setupOffsets: function setupOffsets() {
+                if (this.options.setOffsetsOnce && this._isOffsetsSet) {
                     return;
                 }
 
-                this._initialOffsetSetup = true;
+                this._isOffsetsSet = true;
 
                 this.computeInitialOffset();
-                this.offset.x = this.initialOffset.x;
-                this.offset.y = this.initialOffset.y;
+                this.resetOffset();
             },
 
             /**
@@ -476,9 +484,13 @@
             },
 
             /**
-             * Updates the aspect ratio
+             * Updates the container aspect ratio
+             *
+             * Any previous container height must be cleared before re-measuring the
+             * parent height, since it depends implicitly on the height of any of its children
              */
             updateAspectRatio: function updateAspectRatio() {
+                this.unsetContainerY();
                 this.setContainerY(this.container.parentElement.offsetHeight);
             },
 
@@ -604,6 +616,10 @@
                 return this.container.style.height = y + 'px';
             },
 
+            unsetContainerY: function unsetContainerY() {
+                this.container.style.height = null;
+            },
+
             /**
              * Creates the expected html structure
              */
@@ -658,14 +674,15 @@
 
                 window.setTimeout(function () {
                     this.updatePlaned = false;
-                    this.updateAspectRatio();
 
                     if (event && event.type === 'resize') {
-                        this.computeInitialOffset();
+                        this.updateAspectRatio();
+                        this.setupOffsets();
                     }
 
                     if (event && event.type === 'load') {
-                        this.setupInitialOffset();
+                        this.updateAspectRatio();
+                        this.setupOffsets();
                     }
 
                     var zoomFactor = this.getInitialZoomFactor() * this.zoomFactor,

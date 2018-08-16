@@ -29,6 +29,8 @@ minZoom:            Minimum zoom factor. (default 0.5)
 draggableUnzoomed:  Capture drag events even when the image isn't zoomed. (default true)
                     (using `false` allows other libs (e.g. swipe) to pick up drag events)
 lockDragAxis:       Lock panning of the element to a single axis. (default false)
+setOffsetsOnce:     Compute offsets (image position inside container) only once. (default false)
+                    (using `true` maintains the offset on consecutive `load` and `resize`)
 use2d:              Fall back to 2D transforms when idle. (default true)
                     (a truthy value will still use 3D transforms during animation)
 verticalPadding:    Vertical padding to apply around the image. (default 0)
@@ -50,6 +52,8 @@ pz_dragupdate Drag position updated
 pz_doubletap  Resetting the zoom with double-tap
 
 ```
+
+_(if need be, the event names can be customized via `options`)_
 
 ### Methods
 
