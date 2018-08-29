@@ -506,11 +506,11 @@ var definePinchZoom = function () {
          * @return {Object} the current zoom center
          */
         getCurrentZoomCenter: function () {
-            const offsetLeft = this.offset.x - this.initialOffset.x;
-            const centerX = -1 * this.offset.x - offsetLeft / (1 / this.zoomFactor - 1);
+            var offsetLeft = this.offset.x - this.initialOffset.x;
+            var centerX = -1 * this.offset.x - offsetLeft / (1 / this.zoomFactor - 1);
 
-            const offsetTop = this.offset.y - this.initialOffset.y;
-            const centerY = -1 * this.offset.y - offsetTop / (1 / this.zoomFactor - 1);
+            var offsetTop = this.offset.y - this.initialOffset.y;
+            var centerY = -1 * this.offset.y - offsetTop / (1 / this.zoomFactor - 1);
 
             return {
                 x: centerX,
