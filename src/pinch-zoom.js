@@ -187,7 +187,7 @@ var definePinchZoom = function () {
          * @param event
          */
         handleZoom: function (event, newScale) {
-          if (!newScale) return
+            if (!newScale) return
             // a relative scale factor is used
             var touchCenter = this.getTouchCenter(this.getTouches(event)),
                 scale = newScale / this.lastScale;
