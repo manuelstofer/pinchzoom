@@ -187,6 +187,7 @@ var definePinchZoom = function () {
          * @param event
          */
         handleZoom: function (event, newScale) {
+          if (!newScale) return
             // a relative scale factor is used
             var touchCenter = this.getTouchCenter(this.getTouches(event)),
                 scale = newScale / this.lastScale;
@@ -786,6 +787,7 @@ var definePinchZoom = function () {
             },
 
             getDistance = function (a, b) {
+                if (!a || !b) return null;
                 var x, y;
                 x = a.x - b.x;
                 y = a.y - b.y;
@@ -795,6 +797,8 @@ var definePinchZoom = function () {
             calculateScale = function (startTouches, endTouches) {
                 var startDistance = getDistance(startTouches[0], startTouches[1]),
                     endDistance = getDistance(endTouches[0], endTouches[1]);
+
+                if (!startDistance || !endDistance) return null;
                 return endDistance / startDistance;
             },
 
