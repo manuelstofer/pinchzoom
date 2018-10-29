@@ -851,7 +851,9 @@ var definePinchZoom = function () {
                 } else {
                     switch (interaction) {
                         case 'zoom':
-                            target.handleZoom(event, calculateScale(startTouches, targetTouches(event.touches)));
+                            if (startTouches.length == 2 && event.touches.length == 2) {
+                                target.handleZoom(event, calculateScale(startTouches, targetTouches(event.touches)));
+                            }
                             break;
                         case 'drag':
                             target.handleDrag(event);
