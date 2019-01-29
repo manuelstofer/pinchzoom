@@ -139,6 +139,13 @@ var definePinchZoom = function () {
             doubleTapEventName: 'pz_doubletap',
             verticalPadding: 0,
             horizontalPadding: 0,
+            onZoomStart: null,
+            onZoomEnd: null,
+            onZoomUpdate: null,
+            onDragStart: null,
+            onDragEnd: null,
+            onDragUpdate: null,
+            onDoubleTap: null
         },
 
         /**
@@ -147,6 +154,9 @@ var definePinchZoom = function () {
          */
         handleDragStart: function (event) {
             triggerEvent(this.el, this.options.dragStartEventName);
+            if(typeof this.options.onDragStart == "function"){
+                this.options.onDragStart(this, event)
+            }
             this.stopAnimation();
             this.lastDragPosition = false;
             this.hasInteraction = true;
@@ -166,6 +176,9 @@ var definePinchZoom = function () {
 
         handleDragEnd: function () {
             triggerEvent(this.el, this.options.dragEndEventName);
+            if(typeof this.options.onDragEnd == "function"){
+                this.options.onDragEnd(this, event)
+            }
             this.end();
         },
 
@@ -175,6 +188,9 @@ var definePinchZoom = function () {
          */
         handleZoomStart: function (event) {
             triggerEvent(this.el, this.options.zoomStartEventName);
+            if(typeof this.options.onZoomStart == "function"){
+                this.options.onZoomStart(this, event)
+            }
             this.stopAnimation();
             this.lastScale = 1;
             this.nthZoom = 0;
@@ -204,6 +220,9 @@ var definePinchZoom = function () {
 
         handleZoomEnd: function () {
             triggerEvent(this.el, this.options.zoomEndEventName);
+            if(typeof this.options.onZoomEnd == "function"){
+                this.options.onZoomEnd(this, event)
+            }
             this.end();
         },
 
@@ -231,6 +250,9 @@ var definePinchZoom = function () {
 
             this.animate(this.options.animationDuration, updateProgress, this.swing);
             triggerEvent(this.el, this.options.doubleTapEventName);
+            if(typeof this.options.onDoubleTap == "function"){
+                this.options.onDoubleTap(this, event)
+            }
         },
 
         /**
@@ -317,6 +339,9 @@ var definePinchZoom = function () {
                 y: (scale - 1) * (center.y + this.offset.y)
             });
             triggerEvent(this.el, this.options.zoomUpdateEventName);
+            if(typeof this.options.onZoomUpdate == "function"){
+                this.options.onZoomUpdate(this, event)
+            }
         },
 
         /**
@@ -372,6 +397,9 @@ var definePinchZoom = function () {
                 });
               }
               triggerEvent(this.el, this.options.dragUpdateEventName);
+              if(typeof this.options.onDragUpdate == "function"){
+                this.options.onDragUpdate(this, event)
+            }
             }
         },
 

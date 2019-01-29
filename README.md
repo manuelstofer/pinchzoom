@@ -35,6 +35,13 @@ use2d:              Fall back to 2D transforms when idle. (default true)
                     (a truthy value will still use 3D transforms during animation)
 verticalPadding:    Vertical padding to apply around the image. (default 0)
 horizontalPadding:  Horizontal padding to apply around the image. (default 0)
+onZoomStart:        Callback for zoomstart event (params: Pinchzoom object, Event event) (default null)
+onZoomEnd:          Callback for zoomend event (params: Pinchzoom object, Event event) (default null)
+onZoomUpdate:       Callback for zoomupdate event (params: Pinchzoom object, Event event) (default null)
+onDragStart:        Callback for dragstart event (params: Pinchzoom object, Event event) (default null)
+onDragEnd:          Callback for dragend event (params: Pinchzoom object, Event event) (default null)
+onDragUpdate:       Callback for dragupdate event (params: Pinchzoom object, Event event) (default null)
+onDoubleTap:        Callback for doubletap event (params: Pinchzoom object, Event event) (default null)
 ```
 
 ### Events
@@ -63,6 +70,23 @@ let pz = new PinchZoom(myElement);
 pz.enable(); // Enables all gesture capturing (is enabled by default)
 pz.disable(); // Disables all gesture capturing
 
+```
+
+### Example with callback
+
+```Javascript
+var myElement = document.getElementById("myElement");
+var pz = new PinchZoom.default(myElement, {
+    draggableUnzoomed: false,
+    minZoom: 1,
+    onZoomStart: function(object, event){
+        // Do something on zoom start
+        // You can use any Pinchzoom method by calling object.method()
+    },
+    onZoomEnd: function(object, event){
+        // Do something on zoom end
+    }
+})
 ```
 
 ### Release a New Version
