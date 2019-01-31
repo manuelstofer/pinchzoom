@@ -35,6 +35,7 @@ use2d:              Fall back to 2D transforms when idle. (default true)
                     (a truthy value will still use 3D transforms during animation)
 verticalPadding:    Vertical padding to apply around the image. (default 0)
 horizontalPadding:  Horizontal padding to apply around the image. (default 0)
+
 onZoomStart:        Callback for zoomstart event (params: Pinchzoom object, Event event) (default null)
 onZoomEnd:          Callback for zoomend event (params: Pinchzoom object, Event event) (default null)
 onZoomUpdate:       Callback for zoomupdate event (params: Pinchzoom object, Event event) (default null)
@@ -43,24 +44,6 @@ onDragEnd:          Callback for dragend event (params: Pinchzoom object, Event 
 onDragUpdate:       Callback for dragupdate event (params: Pinchzoom object, Event event) (default null)
 onDoubleTap:        Callback for doubletap event (params: Pinchzoom object, Event event) (default null)
 ```
-
-### Events
-
-Pinchzoom emits some custom events you can listen to:
-
-```Text
-
-pz_zoomstart  Started to zoom
-pz_zoomend    Stopped zooming
-pz_zoomupdate Zoom factor updated
-pz_dragstart  Started to drag the element
-pz_dragend    Stopped to drag the element
-pz_dragupdate Drag position updated
-pz_doubletap  Resetting the zoom with double-tap
-
-```
-
-_(if need be, the event names can be customized via `options`)_
 
 ### Methods
 
@@ -88,6 +71,27 @@ var pz = new PinchZoom.default(myElement, {
     }
 })
 ```
+
+### Events (deprecated)
+
+*Events are deprecated in favour of callbacks (see above).*
+
+Pinchzoom emits custom events you can listen to:
+
+```Text
+
+pz_zoomstart  Started to zoom
+pz_zoomend    Stopped zooming
+pz_zoomupdate Zoom factor updated
+pz_dragstart  Started to drag the element
+pz_dragend    Stopped to drag the element
+pz_dragupdate Drag position updated
+pz_doubletap  Resetting the zoom with double-tap
+
+```
+
+_(if need be, the event names can be customized via `options`)_
+
 
 ### Release a New Version
 
