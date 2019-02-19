@@ -11,7 +11,6 @@ interface IPinchZoomOptions {
     setOffsetsOnce?: boolean;
     use2d?: boolean;
 
-    // events
     onZoomStart?: PinchZoomEventHandler;
     onZoomEnd?: PinchZoomEventHandler;
     onZoomUpdate?: PinchZoomEventHandler;
@@ -20,7 +19,6 @@ interface IPinchZoomOptions {
     onDragUpdate?: PinchZoomEventHandler;
     onDoubleTap?: PinchZoomEventHandler;
 
-    // deprecated events
     zoomStartEventName?: string;
     zoomUpdateEventName?: string;
     zoomEndEventName?: string;
