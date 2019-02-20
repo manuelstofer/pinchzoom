@@ -20,8 +20,10 @@
   "module": "src/pinch-zoom.js",
   "files": [
     "dist/pinch-zoom.umd.js",
-    "src/pinch-zoom.js"
+    "src/pinch-zoom.js",
+    "src/pinch-zoom.d.ts"
   ],
+  "typings": "src/pinch-zoom.d.ts",
   "devDependencies": {
     "babel-cli": "~6.26.0",
     "babel-preset-env": "~1.6.1"
