@@ -10,6 +10,8 @@ interface IPinchZoomOptions {
     lockDragAxis?: boolean;
     setOffsetsOnce?: boolean;
     use2d?: boolean;
+    verticalPadding?: number;
+    horizontalPadding?: number;
 
     onZoomStart?: PinchZoomEventHandler;
     onZoomEnd?: PinchZoomEventHandler;
@@ -26,8 +28,6 @@ interface IPinchZoomOptions {
     dragUpdateEventName?: string;
     dragEndEventName?: string;
     doubleTapEventName?: string;
-    verticalPadding?: number;
-    horizontalPadding?: number;
 }
 
 declare class PinchZoom {
