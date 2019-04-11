@@ -52,7 +52,7 @@ let pz = new PinchZoom(myElement);
 
 pz.enable(); // Enables all gesture capturing (is enabled by default)
 pz.disable(); // Disables all gesture capturing
-
+pz.unBindEvents(); // Remove all events listeners
 ```
 
 ### Example with callback

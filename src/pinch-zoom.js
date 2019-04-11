@@ -98,7 +98,7 @@ var definePinchZoom = function () {
             };
             this.options = Object.assign({}, this.defaults, options);
             this.setupMarkup();
-            this.bindEvents();
+            this.unBindEvents = this.bindEvents();
             this.update();
 
             // The image may already be loaded when PinchZoom is initialized,
@@ -664,15 +664,23 @@ var definePinchZoom = function () {
          */
         bindEvents: function () {
             var self = this;
-            detectGestures(this.container, this);
+            var unsubscriveGestures = detectGestures(this.container, this);
+            var resizeHandler = function(event){
+                self.update(event);
+            };
 
-            window.addEventListener('resize', this.update.bind(this));
+            window.addEventListener('resize', resizeHandler);
             Array.from(this.el.querySelectorAll('img')).forEach(function(imgEl) {
               imgEl.addEventListener('load', self.update.bind(self));
             });
 
             if (this.el.nodeName === 'IMG') {
               this.el.addEventListener('load', this.update.bind(this));
+            }
+
+            return function () {
+                unsubscriveGestures();
+                window.removeEventListener('resize', resizeHandler);
             }
         },
 
@@ -860,15 +868,15 @@ var definePinchZoom = function () {
             },
             firstMove = true;
 
-        el.addEventListener('touchstart', function (event) {
+        var touchStarthandler = function (event) {
             if(target.enabled) {
                 firstMove = true;
                 fingers = event.touches.length;
                 detectDoubleTap(event);
             }
-        });
+        };
 
-        el.addEventListener('touchmove', function (event) {
+        var touchMoveHandler = function (event) {
             if(target.enabled && !target.isDoubleTap) {
                 if (firstMove) {
                     updateInteraction(event);
@@ -895,14 +903,30 @@ var definePinchZoom = function () {
 
                 firstMove = false;
             }
-        });
+        };
 
-        el.addEventListener('touchend', function (event) {
+        var touchendHandler = function (event) {
             if(target.enabled) {
                 fingers = event.touches.length;
                 updateInteraction(event);
             }
+        };
+
+        var handlers = [
+            ['touchstart', touchStarthandler],
+            ['touchmove', touchMoveHandler],
+            ['touchend', touchendHandler]
+        ];
+
+        handlers.forEach(function(args){
+            el.addEventListener.apply(el, args);
         });
+
+        return function unsubscribe() {
+            handlers.forEach(function(args){
+                el.removeEventListener.apply(el, args);
+            });
+        }
     };
 
     return PinchZoom;
