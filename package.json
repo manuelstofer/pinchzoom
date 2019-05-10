@@ -26,6 +26,7 @@
   "typings": "src/pinch-zoom.d.ts",
   "devDependencies": {
     "babel-cli": "~6.26.0",
+    "babel-minify": "^0.5.0",
     "babel-preset-env": "~1.6.1"
   },
   "scripts": {
