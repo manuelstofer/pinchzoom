@@ -2,6 +2,12 @@
 
 PinchZoom is a Javascript library providing multi-touch gestures for zooming and dragging on any DOM element.
 
+## Installation
+
+- Use the [NPM package](https://www.npmjs.com/package/pinch-zoom-js).
+- Link directly to the [minified script](https://unpkg.com/pinch-zoom-js/dist/pinch-zoom.umd.js) via [UNPKG](https://unpkg.com). Make sure you specify a version.
+- Compile from source. 👾
+
 ## Usage
 
 ### Requirements
@@ -93,15 +99,15 @@ pz_doubletap  Resetting the zoom with double-tap
 _(if need be, the event names can be customized via `options`)_
 
 
-### Release a New Version
+## Release a New Version
 
-1. Make a bump commit (update package.json, package-lock.json, src and dist)
+1. Make a bump commit (update package.json, package-lock.json and src)
 2. Create a new tag `git tag -m "v2.2.0" v2.2.0`
 3. Release new NPM version (`npm whoami; npm publish`)
 4. Push the code + the tag to Github (`git push origin v2.2.0`)
 4. Make a new Github release (https://github.com/manuelstofer/pinchzoom/releases)
 
-### Troubleshooting
+## Troubleshooting
 
 - If you have issues with invisible images, make sure that the image isn't absolutely positioned.
   In some cases that will cause trouble.
