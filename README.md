@@ -5,7 +5,7 @@ PinchZoom is a Javascript library providing multi-touch gestures for zooming and
 ## Installation
 
 - Use the [NPM package](https://www.npmjs.com/package/pinch-zoom-js).
-- Link directly to the [minified script](https://unpkg.com/pinch-zoom-js/dist/pinch-zoom.umd.js) via [UNPKG](https://unpkg.com). Make sure you specify a version.
+- Link directly to the [minified script](https://unpkg.com/pinch-zoom-js/dist/pinch-zoom.min.js) via [UNPKG](https://unpkg.com). Make sure you specify a version.
 - Compile from source. 👾
 
 ## Usage
