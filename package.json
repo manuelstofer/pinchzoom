@@ -19,7 +19,9 @@
   "main": "dist/pinch-zoom.umd.js",
   "module": "src/pinch-zoom.js",
   "files": [
+    "dist/pinch-zoom.min.js",
     "dist/pinch-zoom.umd.js",
+    "dist/pinch-zoom.umd.min.js",
     "src/pinch-zoom.js",
     "src/pinch-zoom.d.ts"
   ],
