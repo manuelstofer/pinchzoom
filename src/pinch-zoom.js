@@ -145,7 +145,8 @@ var definePinchZoom = function () {
             onDragStart: null,
             onDragEnd: null,
             onDragUpdate: null,
-            onDoubleTap: null
+            onDoubleTap: null,
+            overflow: 'hidden'
         },
 
         /**
@@ -641,7 +642,7 @@ var definePinchZoom = function () {
             this.el.parentNode.insertBefore(this.container, this.el);
             this.container.appendChild(this.el);
 
-            this.container.style.overflow = 'hidden';
+            this.container.style.overflow = this.options.overflow;
             this.container.style.position = 'relative';
 
             this.el.style.webkitTransformOrigin = '0% 0%';
