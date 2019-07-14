@@ -1,4 +1,4 @@
-#!/bin/bash
+ #!/bin/bash
 
 # clean dist dir
 if [ -d dist ]; then rm -rf dist; fi

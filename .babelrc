@@ -1,21 +1,4 @@
 {
-  "presets": [
-    ["env", {
-      "targets": {
-        "browsers": [
-          "last 2 versions",
-          "> 5%"
-        ]
-      }
-    }]
-  ],
-  "plugins": [
-    // https://github.com/babel/babel/issues/7347
-    ["transform-es2015-modules-umd", {
-      "globals": {
-        "pinch-zoom": "PinchZoom"
-      },
-      "exactGlobals": true
-    }]
-  ]
+    "presets": [ "@babel/preset-env" ],
+    "plugins": [ "@babel/plugin-proposal-class-properties", "@babel/plugin-proposal-object-rest-spread" ]
 }
