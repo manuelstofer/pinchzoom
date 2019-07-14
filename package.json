@@ -25,7 +25,7 @@
     "src/pinch-zoom.js",
     "src/pinch-zoom.d.ts"
   ],
-  "typings": "src/pinch-zoom.d.ts",
+  "types": "src/pinch-zoom.d.ts",
   "devDependencies": {
     "@babel/core": "^7.5.4",
     "@babel/cli": "^7.5.0",

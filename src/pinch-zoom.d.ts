@@ -36,5 +36,3 @@ declare class PinchZoom {
     public enable(): void;
     public disable(): void;
 }
-
-export default PinchZoom;
