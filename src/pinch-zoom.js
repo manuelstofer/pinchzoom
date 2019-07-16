@@ -85,38 +85,38 @@ var definePinchZoom = function () {
      * @constructor
      */
     var PinchZoom = function (el, options) {
-            this.el = el;
-            this.zoomFactor = 1;
-            this.lastScale = 1;
-            this.offset = {
-                x: 0,
-                y: 0
-            };
-            this.initialOffset = {
-                x: 0,
-                y: 0,
-            };
-            this.options = Object.assign({}, this.defaults, options);
-            this.setupMarkup();
-            this.bindEvents();
-            this.update();
-
-            // The image may already be loaded when PinchZoom is initialized,
-            // and then the load event (which trigger update) will never fire.
-            if (this.isImageLoaded(this.el)) {
-              this.updateAspectRatio();
-              this.setupOffsets();
-            }
-
-            this.enable();
-
-        },
-        sum = function (a, b) {
-            return a + b;
-        },
-        isCloseTo = function (value, expected) {
-            return value > expected - 0.01 && value < expected + 0.01;
+        this.el = el;
+        this.zoomFactor = 1;
+        this.lastScale = 1;
+        this.offset = {
+            x: 0,
+            y: 0
         };
+        this.initialOffset = {
+            x: 0,
+            y: 0,
+        };
+        this.options = Object.assign({}, this.defaults, options);
+        this.setupMarkup();
+        this.bindEvents();
+        this.update();
+
+        // The image may already be loaded when PinchZoom is initialized,
+        // and then the load event (which trigger update) will never fire.
+        if (this.isImageLoaded(this.el)) {
+          this.updateAspectRatio();
+          this.setupOffsets();
+        }
+
+        this.enable();
+
+    },
+    sum = function (a, b) {
+        return a + b;
+    },
+    isCloseTo = function (value, expected) {
+        return value > expected - 0.01 && value < expected + 0.01;
+    };
 
     PinchZoom.prototype = {
 
@@ -912,5 +912,3 @@ var definePinchZoom = function () {
 var PinchZoom = definePinchZoom();
 
 export default PinchZoom;
-
-export var __useDefault = true;
