@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.__useDefault = exports["default"] = void 0;
 
 /*
 
@@ -904,6 +904,8 @@ var definePinchZoom = function definePinchZoom() {
   return PinchZoom;
 };
 
-var PinchZoom = definePinchZoom;
+var PinchZoom = definePinchZoom();
 var _default = PinchZoom;
 exports["default"] = _default;
+var __useDefault = true;
+exports.__useDefault = __useDefault;
