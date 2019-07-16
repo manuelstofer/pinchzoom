@@ -904,6 +904,6 @@ var definePinchZoom = function definePinchZoom() {
   return PinchZoom;
 };
 
-var PinchZoom = definePinchZoom();
+var PinchZoom = definePinchZoom;
 var _default = PinchZoom;
 exports["default"] = _default;
