@@ -110,6 +110,9 @@ var definePinchZoom = function () {
 
             this.enable();
 
+            if (typeof this.options.onInit == "function") {
+              this.options.onInit(this);
+            }
         },
         sum = function (a, b) {
             return a + b;
@@ -139,6 +142,7 @@ var definePinchZoom = function () {
             doubleTapEventName: 'pz_doubletap',
             verticalPadding: 0,
             horizontalPadding: 0,
+            onInit: null,
             onZoomStart: null,
             onZoomEnd: null,
             onZoomUpdate: null,

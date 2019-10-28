@@ -42,6 +42,7 @@ use2d:              Fall back to 2D transforms when idle. (default true)
 verticalPadding:    Vertical padding to apply around the image. (default 0)
 horizontalPadding:  Horizontal padding to apply around the image. (default 0)
 
+onInit:             Callback for init event (params: Pinchzoom object) (default null)
 onZoomStart:        Callback for zoomstart event (params: Pinchzoom object, Event event) (default null)
 onZoomEnd:          Callback for zoomend event (params: Pinchzoom object, Event event) (default null)
 onZoomUpdate:       Callback for zoomupdate event (params: Pinchzoom object, Event event) (default null)
