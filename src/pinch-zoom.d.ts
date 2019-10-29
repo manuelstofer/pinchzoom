@@ -1,3 +1,5 @@
+type PinchZoomInitEventHandler = (target: PinchZoom) => void;
+
 type PinchZoomEventHandler = (target: PinchZoom, event: TouchEvent) => void;
 
 interface IPinchZoomOptions {
@@ -12,6 +14,8 @@ interface IPinchZoomOptions {
     use2d?: boolean;
     verticalPadding?: number;
     horizontalPadding?: number;
+
+    onInit?: PinchZoomInitEventHandler;
 
     onZoomStart?: PinchZoomEventHandler;
     onZoomEnd?: PinchZoomEventHandler;
