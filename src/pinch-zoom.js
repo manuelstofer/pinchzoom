@@ -680,23 +680,23 @@ var definePinchZoom = function () {
          * Updates the css values according to the current zoom factor and offset
          */
         update: function (event) {
-            if (this.updatePlaned) {
+            if (event && event.type === 'resize') {
+                this.updateAspectRatio();
+                this.setupOffsets();
+            }
+
+            if (event && event.type === 'load') {
+              this.updateAspectRatio();
+              this.setupOffsets();
+            }
+
+            if (this.updatePlanned) {
                 return;
             }
-            this.updatePlaned = true;
+            this.updatePlanned = true;
 
             window.setTimeout((function () {
-                this.updatePlaned = false;
-
-                if (event && event.type === 'resize') {
-                    this.updateAspectRatio();
-                    this.setupOffsets();
-                }
-
-                if (event && event.type === 'load') {
-                  this.updateAspectRatio();
-                  this.setupOffsets();
-                }
+                this.updatePlanned = false;
 
                 var zoomFactor = this.getInitialZoomFactor() * this.zoomFactor,
                     offsetX = -this.offset.x / zoomFactor,
@@ -866,7 +866,7 @@ var definePinchZoom = function () {
                 fingers = event.touches.length;
                 detectDoubleTap(event);
             }
-        });
+        }, { passive: false });
 
         el.addEventListener('touchmove', function (event) {
             if(target.enabled && !target.isDoubleTap) {
@@ -895,7 +895,7 @@ var definePinchZoom = function () {
 
                 firstMove = false;
             }
-        });
+        }, { passive: false });
 
         el.addEventListener('touchend', function (event) {
             if(target.enabled) {
