@@ -110,11 +110,11 @@ var definePinchZoom = function () {
 
             this.enable();
 
-        },
-        sum = function (a, b) {
+        };
+    var sum = function (a, b) {
             return a + b;
-        },
-        isCloseTo = function (value, expected) {
+        };
+    var isCloseTo = function (value, expected) {
             return value > expected - 0.01 && value < expected + 0.01;
         };
 
