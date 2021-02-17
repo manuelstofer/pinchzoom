@@ -145,7 +145,8 @@ var definePinchZoom = function () {
             onDragStart: null,
             onDragEnd: null,
             onDragUpdate: null,
-            onDoubleTap: null
+            onDoubleTap: null,
+            onUpdate: null
         },
 
         /**
@@ -743,6 +744,10 @@ var definePinchZoom = function () {
                     this.el.style.transform = transform2d;
 
                     this.is3d = false;
+                }
+
+                if(typeof this.options.onUpdate == "function"){
+                    this.options.onUpdate(this, event)
                 }
             }).bind(this), 0);
         },

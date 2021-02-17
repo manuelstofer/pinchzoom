@@ -49,6 +49,7 @@ onDragStart:        Callback for dragstart event (params: Pinchzoom object, Even
 onDragEnd:          Callback for dragend event (params: Pinchzoom object, Event event) (default null)
 onDragUpdate:       Callback for dragupdate event (params: Pinchzoom object, Event event) (default null)
 onDoubleTap:        Callback for doubletap event (params: Pinchzoom object, Event event) (default null)
+onUpdate:           Callback for update event (params: Pinchzoom object, Event event) (default null)
 ```
 
 ### Methods
