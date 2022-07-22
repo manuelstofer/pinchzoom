@@ -666,7 +666,8 @@ var definePinchZoom = function () {
             var self = this;
             detectGestures(this.container, this);
 
-            window.addEventListener('resize', this.update.bind(this));
+            this.resizeHandler = this.update.bind(this)
+            window.addEventListener('resize', this.resizeHandler);
             Array.from(this.el.querySelectorAll('img')).forEach(function(imgEl) {
               imgEl.addEventListener('load', self.update.bind(self));
             });
@@ -759,7 +760,16 @@ var definePinchZoom = function () {
          */
         disable: function() {
           this.enabled = false;
+        },
+
+        /**
+         * Unmounts the zooming container and global event listeners
+         */
+        destroy: function () {
+          window.removeEventListener('resize', this.resizeHandler);
+          this.container.remove();
         }
+
     };
 
     var detectGestures = function (el, target) {
