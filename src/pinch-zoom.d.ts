@@ -34,6 +34,7 @@ declare class PinchZoom {
     constructor(element: HTMLElement, options?: IPinchZoomOptions);
     public enable(): void;
     public disable(): void;
+    public destroy(): void;
 }
 
 export default PinchZoom;

@@ -58,6 +58,7 @@ let pz = new PinchZoom(myElement);
 
 pz.enable(); // Enables all gesture capturing (is enabled by default)
 pz.disable(); // Disables all gesture capturing
+pz.destroy(); // Unmounts the zooming container and global event listeners
 
 ```
 
