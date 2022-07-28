@@ -767,7 +767,8 @@ var definePinchZoom = function () {
          */
         destroy: function () {
           window.removeEventListener('resize', this.resizeHandler);
-          this.container.remove();
+          this.container?.remove();
+          this.container = null;
         }
 
     };
