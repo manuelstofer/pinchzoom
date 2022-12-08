@@ -963,6 +963,7 @@ var definePinchZoom = function () {
 
         el.addEventListener("mousewheel", function (event) {
             if (target.enabled) {
+                cancelEvent(event);
                 target.handleMouseWheel(event);
             }
         });
