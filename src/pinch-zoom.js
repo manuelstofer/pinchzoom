@@ -170,7 +170,7 @@ var definePinchZoom = function () {
          * @param event
          */
         handleDrag: function (event) {
-            var touch = this.getTouches(event)[0];
+            var touch = event.type === "touchmove" ? this.getTouches(event)[0] : this.getPointer(event);
             this.drag(touch, this.lastDragPosition);
             this.offset = this.sanitizeOffset(this.offset);
             this.lastDragPosition = touch;
@@ -966,6 +966,40 @@ var definePinchZoom = function () {
                 target.handleMouseWheel(event);
             }
         });
+        
+        el.addEventListener("mousedown", function (event) {
+            if(target.enabled) {
+                firstMove = true;
+                fingers = 1;
+            }
+        }, { passive: true });
+        
+        el.addEventListener('mousemove', function (event) {
+            if(target.enabled) {
+                if (firstMove) {
+                    updateInteraction(event);
+                    if (interaction) {
+                        cancelEvent(event);
+                    }
+                } else {
+                    if (interaction === "drag") {
+                        target.handleDrag(event);
+                    }
+                    if (interaction) {
+                        cancelEvent(event);
+                        target.update();
+                    }
+                }
+                firstMove = false;
+            }
+        }, { passive: false });
+
+        el.addEventListener("mouseup", function (event) {
+            if(target.enabled) {
+                fingers = 0;
+                updateInteraction(event);
+            }
+        }, { passive: true });
     };
 
     return PinchZoom;
