@@ -39,6 +39,7 @@ setOffsetsOnce:     Compute offsets (image position inside container) only once.
                     (using `true` maintains the offset on consecutive `load` and `resize`)
 use2d:              Fall back to 2D transforms when idle. (default true)
                     (a truthy value will still use 3D transforms during animation)
+useMouseWheel:      Use mouse wheel zoom and mouse drag. (default false)
 verticalPadding:    Vertical padding to apply around the image. (default 0)
 horizontalPadding:  Horizontal padding to apply around the image. (default 0)
 

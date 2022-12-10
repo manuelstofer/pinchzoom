@@ -130,6 +130,7 @@ var definePinchZoom = function () {
             lockDragAxis: false,
             setOffsetsOnce: false,
             use2d: true,
+            useMouseWheel: false,
             zoomStartEventName: 'pz_zoomstart',
             zoomUpdateEventName: 'pz_zoomupdate',
             zoomEndEventName: 'pz_zoomend',
@@ -961,46 +962,49 @@ var definePinchZoom = function () {
             }
         });
 
-        el.addEventListener("mousewheel", function (event) {
-            if (target.enabled) {
-                cancelEvent(event);
-                target.handleMouseWheel(event);
-            }
-        });
-        
-        el.addEventListener("mousedown", function (event) {
-            if(target.enabled) {
-                firstMove = true;
-                fingers = 1;
-            }
-        }, { passive: true });
-        
-        el.addEventListener('mousemove', function (event) {
-            if(target.enabled) {
-                if (firstMove) {
-                    updateInteraction(event);
-                    if (interaction) {
-                        cancelEvent(event);
-                    }
-                } else {
-                    if (interaction === "drag") {
-                        target.handleDrag(event);
-                    }
-                    if (interaction) {
-                        cancelEvent(event);
-                        target.update();
-                    }
-                }
-                firstMove = false;
-            }
-        }, { passive: false });
+        if(target.options.useMouseWheel) {
 
-        el.addEventListener("mouseup", function (event) {
-            if(target.enabled) {
-                fingers = 0;
-                updateInteraction(event);
-            }
-        }, { passive: true });
+            el.addEventListener("mousewheel", function (event) {
+                if (target.enabled) {
+                    cancelEvent(event);
+                    target.handleMouseWheel(event);
+                }
+            });
+            
+            el.addEventListener("mousedown", function (event) {
+                if(target.enabled) {
+                    firstMove = true;
+                    fingers = 1;
+                }
+            }, { passive: true });
+            
+            el.addEventListener('mousemove', function (event) {
+                if(target.enabled) {
+                    if (firstMove) {
+                        updateInteraction(event);
+                        if (interaction) {
+                            cancelEvent(event);
+                        }
+                    } else {
+                        if (interaction === "drag") {
+                            target.handleDrag(event);
+                        }
+                        if (interaction) {
+                            cancelEvent(event);
+                            target.update();
+                        }
+                    }
+                    firstMove = false;
+                }
+            }, { passive: false });
+
+            el.addEventListener("mouseup", function (event) {
+                if(target.enabled) {
+                    fingers = 0;
+                    updateInteraction(event);
+                }
+            }, { passive: true });
+        }
     };
 
     return PinchZoom;
