@@ -651,6 +651,8 @@ var definePinchZoom = function () {
             this.el.style.transformOrigin = '0% 0%';
 
             this.el.style.position = 'absolute';
+            this.el.style.backfaceVisibility = 'hidden';
+            this.el.style.willChange = 'transform';
         },
 
         end: function () {
