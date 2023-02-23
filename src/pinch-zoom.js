@@ -130,6 +130,7 @@ var definePinchZoom = function () {
             lockDragAxis: false,
             setOffsetsOnce: false,
             use2d: true,
+            useMouseWheel: false,
             zoomStartEventName: 'pz_zoomstart',
             zoomUpdateEventName: 'pz_zoomupdate',
             zoomEndEventName: 'pz_zoomend',
@@ -137,6 +138,7 @@ var definePinchZoom = function () {
             dragUpdateEventName: 'pz_dragupdate',
             dragEndEventName: 'pz_dragend',
             doubleTapEventName: 'pz_doubletap',
+            mouseWheelEventName: 'pz_mousewheel',
             verticalPadding: 0,
             horizontalPadding: 0,
             onZoomStart: null,
@@ -145,7 +147,8 @@ var definePinchZoom = function () {
             onDragStart: null,
             onDragEnd: null,
             onDragUpdate: null,
-            onDoubleTap: null
+            onDoubleTap: null,
+            onMouseWheel: null
         },
 
         /**
@@ -168,7 +171,7 @@ var definePinchZoom = function () {
          * @param event
          */
         handleDrag: function (event) {
-            var touch = this.getTouches(event)[0];
+            var touch = event.type === "touchmove" ? this.getTouches(event)[0] : this.getPointer(event);
             this.drag(touch, this.lastDragPosition);
             this.offset = this.sanitizeOffset(this.offset);
             this.lastDragPosition = touch;
@@ -252,6 +255,29 @@ var definePinchZoom = function () {
             triggerEvent(this.el, this.options.doubleTapEventName);
             if(typeof this.options.onDoubleTap == "function"){
                 this.options.onDoubleTap(this, event)
+            }
+        },
+
+        /**
+         * Event handler for 'mousewheel'
+         * @param event
+         */
+        handleMouseWheel: function (event) {
+            var center = this.getPointer(event),
+                newScale = Math.min(
+                    Math.max(this.options.minZoom, this.lastScale + event.deltaY * -0.01),
+                    this.options.maxZoom
+                ),
+                scale = newScale / this.lastScale;
+
+            this.scale(scale, center);
+
+            this.lastScale = newScale;
+            this.update()
+            
+            triggerEvent(this.el, this.options.mouseWheelEventName);
+            if (typeof this.options.onMouseWheel == "function") {
+            this.options.onMouseWheel(this, event);
             }
         },
 
@@ -564,6 +590,24 @@ var definePinchZoom = function () {
                     y: touch.pageY - posTop,
                 };
             });
+        },
+        
+        /**
+         * Returns the pointer of an event relative to the container offset
+         * @param event
+         * @return pointer
+         */
+        getPointer: function (event) {
+            var rect = this.container.getBoundingClientRect();
+            var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            var scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft;
+            var posTop = rect.top + scrollTop;
+            var posLeft = rect.left + scrollLeft;
+
+            return {
+                x: event.pageX - posLeft,
+                y: event.pageY - posTop,
+            };
         },
 
         /**
@@ -919,6 +963,50 @@ var definePinchZoom = function () {
                 updateInteraction(event);
             }
         });
+
+        if(target.options.useMouseWheel) {
+
+            el.addEventListener("mousewheel", function (event) {
+                if (target.enabled) {
+                    cancelEvent(event);
+                    target.handleMouseWheel(event);
+                }
+            });
+            
+            el.addEventListener("mousedown", function (event) {
+                if(target.enabled) {
+                    firstMove = true;
+                    fingers = 1;
+                }
+            }, { passive: true });
+            
+            el.addEventListener('mousemove', function (event) {
+                if(target.enabled) {
+                    if (firstMove) {
+                        updateInteraction(event);
+                        if (interaction) {
+                            cancelEvent(event);
+                        }
+                    } else {
+                        if (interaction === "drag") {
+                            target.handleDrag(event);
+                        }
+                        if (interaction) {
+                            cancelEvent(event);
+                            target.update();
+                        }
+                    }
+                    firstMove = false;
+                }
+            }, { passive: false });
+
+            el.addEventListener("mouseup", function (event) {
+                if(target.enabled) {
+                    fingers = 0;
+                    updateInteraction(event);
+                }
+            }, { passive: true });
+        }
     };
 
     return PinchZoom;
