@@ -120,4 +120,4 @@ Licensed under the [MIT License](http://opensource.org/licenses/MIT).
 
 ## Github Page with demo
 
-https://manuelstofer.github.com/pinchzoom/
+https://manuelstofer.github.io/pinchzoom/
