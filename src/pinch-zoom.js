@@ -130,6 +130,7 @@ var definePinchZoom = function () {
             lockDragAxis: false,
             setOffsetsOnce: false,
             use2d: true,
+            useDoubleTap: true,
             zoomStartEventName: 'pz_zoomstart',
             zoomUpdateEventName: 'pz_zoomupdate',
             zoomEndEventName: 'pz_zoomend',
@@ -878,7 +879,10 @@ var definePinchZoom = function () {
             if(target.enabled) {
                 firstMove = true;
                 fingers = event.touches.length;
-                detectDoubleTap(event);
+
+                if (target.options.useDoubleTap) {
+                    detectDoubleTap(event);
+                }
             }
         }, { passive: false });
 
