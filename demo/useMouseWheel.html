@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+    <title>Pinchzoom.js Demo</title>
+
+    <link rel="stylesheet" href="style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+
+    <script type="text/javascript" src="../dist/pinch-zoom.umd.js"></script>
+</head>
+<body>
+
+    <div class="page pinch-zoom-parent">
+        <div class="pinch-zoom">
+            <div class="description">
+                <h1>Pinchzoom.js</h1>
+                <p>
+                    Multi-touch zoom in Javascript
+                </p>
+            </div>
+            <img src="frog.jpg"/>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+      var el = document.querySelector('div.pinch-zoom');
+      new PinchZoom.default(el, { useMouseWheel: true });
+    </script>
+
+</body>
+</html>
