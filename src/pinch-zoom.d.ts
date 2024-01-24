@@ -11,6 +11,7 @@ declare interface IPinchZoomOptions {
     setOffsetsOnce?: boolean;
     use2d?: boolean;
     useMouseWheel?: boolean;
+    useDoubleTap?: boolean;
     verticalPadding?: number;
     horizontalPadding?: number;
 

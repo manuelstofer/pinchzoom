@@ -4,7 +4,7 @@
     Copyright (c) Manuel Stofer 2013 - today
 
     Author: Manuel Stofer (mst@rtp.ch)
-    Version: 2.3.4
+    Version: 2.3.5
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -131,6 +131,7 @@ var definePinchZoom = function () {
             setOffsetsOnce: false,
             use2d: true,
             useMouseWheel: false,
+            useDoubleTap: true,
             zoomStartEventName: 'pz_zoomstart',
             zoomUpdateEventName: 'pz_zoomupdate',
             zoomEndEventName: 'pz_zoomend',
@@ -924,7 +925,10 @@ var definePinchZoom = function () {
             if(target.enabled) {
                 firstMove = true;
                 fingers = event.touches.length;
-                detectDoubleTap(event);
+
+                if (target.options.useDoubleTap) {
+                    detectDoubleTap(event);
+                }
             }
         }, { passive: false });
 
